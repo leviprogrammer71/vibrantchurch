@@ -1,0 +1,4 @@
+project_id = "volhysqijjxxuowebmhb"
+
+[functions.staff-auth-lookup]
+verify_jwt = false
