@@ -11,18 +11,18 @@ export const churchInfo = {
   state: "PA",
   zip: "17581",
   fullAddress: "113 Conestoga Street, Terre Hill, PA 17581",
-  phone: "(717) 445-0879",
+  phone: "(559) 207-8144",
   email: "hello@vibrantchurchterrehill.org",
   serviceTime: "Sundays at 10:00 AM",
   officeHours: "Mon–Thu: 8:30 AM – 4:30 PM | Friday: 8:30 AM – 12:00 PM",
   social: {
-    facebook: "https://facebook.com/vibrantchurch",
-    instagram: "https://instagram.com/vibrantchurch",
+    facebook: "https://www.facebook.com/share/19ZCVw6QcX/",
+    instagram: "https://www.instagram.com/vibrantchurchterrehill",
     youtube: "https://www.youtube.com/@vibrantchurchterrehill7120",
   },
   links: {
     giving: "https://vibrant-church-506100.churchcenter.com/giving",
-    events: "https://vibrant-church-506100.churchcenter.com/calendar?view=gallery",
+    events: "https://vibrant-church-506100.churchcenter.com/calendar",
     youtube: "https://www.youtube.com/@vibrantchurchterrehill7120",
   },
   emails: {

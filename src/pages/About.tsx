@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { Globe } from 'lucide-react';
+import { type ComponentType, type SVGProps } from 'react';
+// No Lucide imports — using custom SVG icon set
 import { Button } from '@/components/ui/button';
 import { SEO } from '@/components/SEO';
 import { usePageContent } from '@/hooks/usePageContent';
@@ -11,6 +12,14 @@ import {
   timeline as defaultTimeline,
   aboutUs,
 } from '@/data/church';
+import {
+  IconCross,
+  IconCommunity,
+  IconHeart,
+  IconBible,
+  IconSparkles,
+  IconDividerLeafy,
+} from '@/icons';
 
 // =====================================================
 // Types
@@ -91,18 +100,20 @@ const defaultAboutContent: AboutPageContent = {
   },
 };
 
-// Watercolor icon images — keyed to the `icon` string stored on each data record
-const missionIconImageMap: Record<string, string> = {
-  cross: '/images/elements/icons/cross.png',
-  people: '/images/elements/icons/people-circle.png',
-  globe: '/images/elements/icons/heart.png',
+type SvgIcon = ComponentType<SVGProps<SVGSVGElement>>;
+
+// Watercolor SVG icon components — keyed to the `icon` string stored on each data record
+const missionIconMap: Record<string, SvgIcon> = {
+  cross: IconCross,
+  people: IconCommunity,
+  globe: IconHeart,
 };
 
-const valueIconImages = [
-  '/images/elements/icons/bible.png',
-  '/images/elements/icons/sparkles.png',
-  '/images/elements/icons/people-circle.png',
-  '/images/elements/icons/heart.png',
+const valueIcons: SvgIcon[] = [
+  IconBible,
+  IconSparkles,
+  IconCommunity,
+  IconHeart,
 ];
 
 // Static decorative/photo assets
@@ -332,16 +343,12 @@ export default function About() {
               className="font-[Playfair_Display] text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight"
             />
             {/* Leafy divider */}
-            <img
-              src="/images/elements/icons/divider-leafy.png"
-              alt=""
-              className="w-44 mx-auto mt-6 opacity-40 brightness-200"
-            />
+            <IconDividerLeafy className="w-44 mx-auto mt-6 opacity-40" />
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 lg:gap-10 mt-16">
             {missionPillars.map((pillar, index) => {
-              const iconSrc = missionIconImageMap[pillar?.icon ?? ''] ?? missionIconImageMap.cross;
+              const PillarIcon = missionIconMap[pillar?.icon ?? ''] ?? missionIconMap.cross;
               return (
                 <motion.div
                   key={pillar?.title ?? index}
@@ -352,7 +359,7 @@ export default function About() {
                   className="flex flex-col items-center text-center"
                 >
                   <div className="w-18 h-18 rounded-full bg-white/10 border border-brand-gold/40 flex items-center justify-center mb-5 p-3">
-                    <img src={iconSrc} alt="" className="w-10 h-10 object-contain brightness-200" />
+                    <PillarIcon className="w-10 h-10" />
                   </div>
                   <h3 className="font-[Playfair_Display] text-xl font-semibold text-white mb-2">
                     {pillar?.title ?? ''}
@@ -386,7 +393,7 @@ export default function About() {
 
               <ul className="space-y-6">
                 {churchValues.map((value, index) => {
-                  const iconSrc = valueIconImages[index % valueIconImages.length];
+                  const ValueIcon = valueIcons[index % valueIcons.length];
                   return (
                     <motion.li
                       key={value?.title ?? index}
@@ -397,7 +404,7 @@ export default function About() {
                       className="flex items-start gap-4"
                     >
                       <div className="shrink-0 w-14 h-14 rounded-full bg-brand-navy/5 flex items-center justify-center">
-                        <img src={iconSrc} alt="" className="w-8 h-8 object-contain" />
+                        <ValueIcon className="w-8 h-8" />
                       </div>
                       <div>
                         <h3 className="font-semibold text-lg text-brand-navy mb-1">

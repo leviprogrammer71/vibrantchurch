@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { Facebook, Instagram, Youtube } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { churchInfo, navigationLinks, footerTagline } from '@/data/church';
+import { FadeUp } from '@/components/ui/AnimatedSection';
 
 function CrossIcon({ className }: { className?: string }) {
   return (
@@ -24,12 +26,12 @@ export function Footer() {
         <div className="bg-brand-cream/90 backdrop-blur-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
             <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
-              <div className="text-center lg:text-left">
+              <FadeUp className="text-center lg:text-left">
                 <h3 className="font-[Playfair_Display] text-3xl sm:text-4xl font-bold text-brand-navy mb-2">
                   We'd love to welcome you!
                 </h3>
                 <p className="text-brand-navy/70">{churchInfo.serviceTime}</p>
-              </div>
+              </FadeUp>
               <div className="flex flex-col sm:flex-row items-center gap-6 text-center">
                 <div className="flex items-start gap-2">
                   <svg className="w-5 h-5 mt-0.5 text-brand-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
@@ -47,9 +49,11 @@ export function Footer() {
                   Get Directions
                 </a>
               </div>
-              <p className="font-[Caveat] text-2xl text-brand-gold italic">
-                Come as you are.<br />You belong here.
-              </p>
+              <FadeUp delay={0.3}>
+                <p className="font-[Caveat] text-2xl text-brand-gold italic">
+                  Come as you are.<br />You belong here.
+                </p>
+              </FadeUp>
             </div>
           </div>
         </div>
@@ -68,33 +72,25 @@ export function Footer() {
               {footerTagline}
             </p>
             <div className="flex gap-3">
-              <a
-                href={churchInfo.social.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-                aria-label="Facebook"
-              >
-                <Facebook className="w-4 h-4" />
-              </a>
-              <a
-                href={churchInfo.social.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-                aria-label="Instagram"
-              >
-                <Instagram className="w-4 h-4" />
-              </a>
-              <a
-                href={churchInfo.social.youtube}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
-                aria-label="YouTube"
-              >
-                <Youtube className="w-4 h-4" />
-              </a>
+              {[
+                { href: churchInfo.social.facebook, icon: Facebook, label: 'Facebook' },
+                { href: churchInfo.social.instagram, icon: Instagram, label: 'Instagram' },
+                { href: churchInfo.social.youtube, icon: Youtube, label: 'YouTube' },
+              ].map(({ href, icon: Icon, label }) => (
+                <motion.a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 rounded-full bg-white/10 hover:bg-brand-gold/30 transition-colors"
+                  aria-label={label}
+                  whileHover={{ scale: 1.15, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Icon className="w-4 h-4" />
+                </motion.a>
+              ))}
             </div>
           </div>
 

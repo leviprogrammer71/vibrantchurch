@@ -128,20 +128,26 @@ export function Header() {
                     </span>
                   </div>
                   <nav className="flex flex-col gap-1 flex-1">
-                    {navigationLinks.map((link) => (
-                      <Link
+                    {navigationLinks.map((link, i) => (
+                      <motion.div
                         key={link.path}
-                        to={link.path}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className={cn(
-                          'text-lg font-medium py-3 px-4 rounded-lg transition-colors',
-                          location.pathname === link.path
-                            ? 'text-brand-gold bg-brand-navy/5'
-                            : 'text-brand-navy/80 hover:text-brand-navy hover:bg-brand-navy/5'
-                        )}
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.3, delay: i * 0.05 }}
                       >
-                        {link.name}
-                      </Link>
+                        <Link
+                          to={link.path}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className={cn(
+                            'block text-lg font-medium py-3 px-4 rounded-lg transition-all duration-200',
+                            location.pathname === link.path
+                              ? 'text-brand-gold bg-brand-navy/5'
+                              : 'text-brand-navy/80 hover:text-brand-navy hover:bg-brand-navy/5 hover:translate-x-1'
+                          )}
+                        >
+                          {link.name}
+                        </Link>
+                      </motion.div>
                     ))}
                   </nav>
                   <div className="pt-6 border-t border-brand-gold/20">

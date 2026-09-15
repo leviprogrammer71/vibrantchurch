@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Youtube, ArrowRight, Loader2 } from 'lucide-react';
+import { Youtube, Loader2 } from 'lucide-react';
+import { IconPlay, IconQuoteOpen, IconSpeechBubble, IconArrow } from '@/icons';
 import { Button } from '@/components/ui/button';
 import { SEO } from '@/components/SEO';
 import { churchInfo, watchPage } from '@/data/church';
@@ -152,7 +153,7 @@ export default function Watch() {
             <div className="text-center mt-8">
               <a href={YOUTUBE_CHANNEL_URL} target="_blank" rel="noopener noreferrer">
                 <Button size="lg" className="bg-brand-navy text-white hover:bg-brand-navy/90 font-semibold">
-                  <img src="/images/elements/icons/play.png" alt="" className="w-5 h-5 mr-2 brightness-200" />
+                  <IconPlay className="w-5 h-5 mr-2" />
                   Watch Now
                 </Button>
               </a>
@@ -208,7 +209,7 @@ export default function Watch() {
               className="inline-flex items-center gap-2 text-brand-navy font-semibold hover:text-brand-gold transition-colors group"
             >
               View All Messages
-              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+              <IconArrow className="w-5 h-5 transition-transform group-hover:translate-x-1" />
             </a>
           </motion.div>
         </div>
@@ -225,7 +226,7 @@ export default function Watch() {
 
         <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div {...fadeUp}>
-            <img src="/images/elements/icons/quote-open.png" alt="" className="w-10 h-10 mx-auto mb-3 opacity-40" />
+            <IconQuoteOpen className="w-10 h-10 mx-auto mb-3 opacity-40" />
             <p className="font-[Caveat] text-3xl sm:text-4xl lg:text-5xl text-brand-navy leading-snug mb-4">
               Let the message of Christ dwell among you richly.
             </p>
@@ -280,7 +281,7 @@ export default function Watch() {
               transition={{ duration: 0.7, ease: 'easeOut', delay: 0.15 }}
             >
               <div className="bg-white/10 border border-white/15 backdrop-blur-sm rounded-2xl p-8 sm:p-10 text-center">
-                <img src="/images/elements/icons/speech-bubble.png" alt="" className="w-12 h-12 mx-auto mb-5 brightness-200 opacity-80" />
+                <IconSpeechBubble className="w-12 h-12 mx-auto mb-5 opacity-80" />
                 <h3 className="font-[Playfair_Display] text-2xl font-bold text-white mb-3">
                   Get Messages in Your Inbox
                 </h3>

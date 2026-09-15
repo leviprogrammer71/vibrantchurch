@@ -40,8 +40,8 @@ const defaultSettings: GlobalSettings = {
   zip: '17581',
   phone: '+1 (559) 207-8144',
   email: 'hello@vibranttchurch.org',
-  facebookUrl: 'https://facebook.com/vibrantchurch',
-  instagramUrl: 'https://instagram.com/vibrantchurch',
+  facebookUrl: 'https://www.facebook.com/share/19ZCVw6QcX/',
+  instagramUrl: 'https://www.instagram.com/vibrantchurchterrehill',
   youtubeUrl: 'https://youtube.com/@vibrantchurch',
 };
 

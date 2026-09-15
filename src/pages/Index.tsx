@@ -1,10 +1,23 @@
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ChevronRight, Clock, MapPin, ArrowRight } from 'lucide-react';
+// No Lucide imports — using custom SVG icon set
 import { Button } from '@/components/ui/button';
 import { SEO } from '@/components/SEO';
 import { churchInfo, whatToExpect } from '@/data/church';
-import { useRef } from 'react';
+import { useRef, type ComponentType, type SVGProps } from 'react';
+import {
+  IconArrow,
+  IconClock,
+  IconCross,
+  IconHeart,
+  IconLocation,
+  IconPlay,
+  IconQuoteOpen,
+  IconSparkles,
+  IconDividerLeafy,
+  IconCommunity,
+  IconBible,
+} from '@/icons';
 
 /* ── animation presets ── */
 const fadeUp = (delay = 0) => ({
@@ -45,14 +58,16 @@ const slideInRight = (delay = 0) => ({
 const YOUTUBE_CHANNEL_ID = 'UCzWxTItXMHZMS75vl0tJybw';
 const UPLOADS_PLAYLIST_ID = `UU${YOUTUBE_CHANNEL_ID.slice(2)}`;
 
-const quickCards = [
+type SvgIcon = ComponentType<SVGProps<SVGSVGElement>>;
+
+const quickCards: { title: string; description: string; cta: string; path: string; image: string; Icon: SvgIcon }[] = [
   {
     title: "I'm New Here",
     description: "We'd love to meet you this Sunday. Learn what to expect on your first visit.",
     cta: "Plan Your Visit",
     path: "/visit",
     image: "/images/photos/hangout.jpg",
-    iconSrc: "/images/elements/icons/location.png",
+    Icon: IconLocation,
   },
   {
     title: "Watch Messages",
@@ -60,7 +75,7 @@ const quickCards = [
     cta: "Watch Now",
     path: "/watch",
     image: "/images/photos/worship.jpg",
-    iconSrc: "/images/elements/icons/play.png",
+    Icon: IconPlay,
   },
   {
     title: "Find Community",
@@ -68,16 +83,16 @@ const quickCards = [
     cta: "Get Connected",
     path: "/about",
     image: "/images/photos/pray.jpg",
-    iconSrc: "/images/elements/icons/heart.png",
+    Icon: IconHeart,
   },
 ];
 
-/* Map whatToExpect icon keys → custom watercolor icon images */
-const expectIconMap: Record<string, string> = {
-  users: '/images/elements/icons/people-circle.png',
-  music: '/images/elements/icons/cross.png',
-  book: '/images/elements/icons/bible.png',
-  heart: '/images/elements/icons/heart.png',
+/* Map whatToExpect icon keys → custom SVG icon components */
+const expectIconMap: Record<string, SvgIcon> = {
+  users: IconCommunity,
+  music: IconCross,
+  book: IconBible,
+  heart: IconHeart,
 };
 
 export default function Index() {
@@ -152,12 +167,12 @@ export default function Index() {
             >
               <Link to="/visit">
                 <Button className="bg-brand-gold text-brand-navy hover:bg-brand-gold-hover rounded-full px-8 py-6 text-base font-bold shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5">
-                  Plan Your Visit <ArrowRight className="w-4 h-4 ml-2" />
+                  Plan Your Visit <IconArrow className="w-4 h-4 ml-2" />
                 </Button>
               </Link>
               <Link to="/watch">
                 <Button className="border-2 border-white/50 text-white hover:bg-white/15 rounded-full px-8 py-6 text-base font-semibold bg-white/5 backdrop-blur-sm transition-all hover:-translate-y-0.5">
-                  <img src="/images/elements/icons/play.png" alt="" className="w-5 h-5 mr-2 brightness-200" /> Watch a Message
+                  <IconPlay className="w-5 h-5 mr-2" /> Watch a Message
                 </Button>
               </Link>
             </motion.div>
@@ -175,6 +190,7 @@ export default function Index() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             {quickCards.map((card, i) => {
+              const CardIcon = card.Icon;
               return (
                 <motion.div key={card.title} {...scaleIn(i * 0.15)}>
                   <Link to={card.path}>
@@ -187,7 +203,7 @@ export default function Index() {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                         <div className="absolute top-4 left-4 w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-md">
-                          <img src={card.iconSrc} alt="" className="w-8 h-8 object-contain" />
+                          <CardIcon className="w-8 h-8" />
                         </div>
                       </div>
                       <div className="p-6">
@@ -198,7 +214,7 @@ export default function Index() {
                           {card.description}
                         </p>
                         <span className="inline-flex items-center gap-1 text-brand-gold font-bold text-sm group-hover:gap-2.5 transition-all">
-                          {card.cta} <ChevronRight className="w-4 h-4" />
+                          {card.cta} <IconArrow className="w-4 h-4" />
                         </span>
                       </div>
                     </div>
@@ -248,16 +264,8 @@ export default function Index() {
                 <img src="/images/photos/inside.jpg" alt="Church interior" className="w-full h-full object-cover" />
               </motion.div>
               {/* Decorative watercolor accents */}
-              <img
-                src="/images/elements/icons/sparkles.png"
-                alt=""
-                className="absolute -bottom-6 -right-6 w-28 h-28 opacity-40 z-0"
-              />
-              <img
-                src="/images/elements/icons/arrow.png"
-                alt=""
-                className="absolute -top-4 -left-2 w-20 opacity-25 z-0 -rotate-45"
-              />
+              <IconSparkles className="absolute -bottom-6 -right-6 w-28 h-28 opacity-40 z-0" />
+              <IconArrow className="absolute -top-4 -left-2 w-20 h-20 opacity-25 z-0 -rotate-45" />
             </motion.div>
 
             {/* Copy */}
@@ -278,7 +286,7 @@ export default function Index() {
               <div className="flex items-center gap-6">
                 <Link to="/about">
                   <Button className="bg-brand-navy text-white hover:bg-brand-navy/90 rounded-full px-7 font-semibold transition-all hover:-translate-y-0.5">
-                    Learn More <ChevronRight className="w-4 h-4 ml-1" />
+                    Learn More <IconArrow className="w-4 h-4 ml-1" />
                   </Button>
                 </Link>
                 <p className="font-[Caveat] text-2xl text-brand-gold">
@@ -352,7 +360,7 @@ export default function Index() {
               <div className="mt-5 flex items-center gap-4">
                 <Link to="/watch">
                   <Button className="bg-brand-navy text-white hover:bg-brand-navy/90 rounded-full font-semibold transition-all hover:-translate-y-0.5">
-                    <img src="/images/elements/icons/play.png" alt="" className="w-5 h-5 mr-2 brightness-200" /> All Messages
+                    <IconPlay className="w-5 h-5 mr-2" /> All Messages
                   </Button>
                 </Link>
                 <a
@@ -376,7 +384,7 @@ export default function Index() {
                   to="/events"
                   className="text-sm text-brand-gold font-semibold flex items-center gap-1 hover:gap-2.5 transition-all"
                 >
-                  View All <ChevronRight className="w-4 h-4" />
+                  View All <IconArrow className="w-4 h-4" />
                 </Link>
               </div>
               <h2 className="font-[Playfair_Display] text-3xl font-bold text-brand-navy mb-6">
@@ -405,10 +413,10 @@ export default function Index() {
                     <div className="flex-1 min-w-0">
                       <h4 className="font-semibold text-brand-navy truncate">{ev.title}</h4>
                       <p className="text-sm text-brand-navy/50">
-                        <Clock className="w-3.5 h-3.5 inline mr-1 -mt-0.5" />{ev.time}
+                        <IconClock className="w-3.5 h-3.5 inline mr-1 -mt-0.5" />{ev.time}
                       </p>
                     </div>
-                    <ChevronRight className="w-4 h-4 text-brand-navy/20 shrink-0" />
+                    <IconArrow className="w-4 h-4 text-brand-navy/20 shrink-0" />
                   </motion.div>
                 ))}
               </div>
@@ -438,20 +446,12 @@ export default function Index() {
         <div className="absolute inset-0 bg-brand-cream/85" />
         <motion.div {...fadeUp()} className="relative max-w-3xl mx-auto px-4 text-center">
           {/* Watercolor quotation marks */}
-          <img
-            src="/images/elements/icons/quote-open.png"
-            alt=""
-            className="w-12 h-12 mx-auto mb-4 opacity-50"
-          />
+          <IconQuoteOpen className="w-12 h-12 mx-auto mb-4 opacity-50" />
           <p className="font-[Playfair_Display] italic text-2xl sm:text-3xl lg:text-4xl text-brand-navy leading-relaxed mb-4">
             Your word is a lamp to my feet and a light to my path.
           </p>
           {/* Leafy divider */}
-          <img
-            src="/images/elements/icons/divider-leafy.png"
-            alt=""
-            className="w-48 mx-auto my-4 opacity-60"
-          />
+          <IconDividerLeafy className="w-48 mx-auto my-4 opacity-60" />
           <span className="font-[Caveat] text-xl text-brand-gold">Psalm 119:105</span>
         </motion.div>
       </section>
@@ -484,7 +484,7 @@ export default function Index() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {(whatToExpect ?? []).map((item, i) => {
-              const iconSrc = expectIconMap[item.icon ?? 'heart'] ?? expectIconMap.heart;
+              const ExpectIcon = expectIconMap[item.icon ?? 'heart'] ?? expectIconMap.heart;
               return (
                 <motion.div
                   key={item.title}
@@ -495,7 +495,7 @@ export default function Index() {
                   className="group bg-brand-cream/60 rounded-2xl p-7 hover:bg-white hover:shadow-xl transition-all duration-500 hover:-translate-y-1 border border-transparent hover:border-brand-gold/10"
                 >
                   <div className="w-16 h-16 rounded-2xl bg-brand-navy/5 group-hover:bg-brand-gold/10 flex items-center justify-center mb-5 transition-colors duration-500">
-                    <img src={iconSrc} alt="" className="w-10 h-10 object-contain" />
+                    <ExpectIcon className="w-10 h-10" />
                   </div>
                   <h3 className="font-[Playfair_Display] text-lg font-bold text-brand-navy mb-2">{item.title}</h3>
                   <p className="text-sm text-brand-navy/60 leading-relaxed">{item.description}</p>
@@ -560,11 +560,7 @@ export default function Index() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
           <motion.div {...fadeUp()} className="text-center max-w-3xl mx-auto">
             {/* Watercolor cross icon */}
-            <img
-              src="/images/elements/icons/cross.png"
-              alt=""
-              className="w-16 h-16 mx-auto mb-6 opacity-60 brightness-200"
-            />
+            <IconCross className="w-16 h-16 mx-auto mb-6 opacity-60" />
             <h2 className="font-[Playfair_Display] text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
               Come as you are. <br />Leave <em className="italic text-brand-gold font-normal">encouraged.</em>
             </h2>
@@ -575,15 +571,11 @@ export default function Index() {
               You belong here.
             </p>
             {/* Leafy divider */}
-            <img
-              src="/images/elements/icons/divider-leafy.png"
-              alt=""
-              className="w-40 mx-auto mb-8 opacity-40 brightness-200"
-            />
+            <IconDividerLeafy className="w-40 mx-auto mb-8 opacity-40" />
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link to="/visit">
                 <Button className="bg-brand-gold text-brand-navy hover:bg-brand-gold-hover rounded-full px-10 py-6 text-lg font-bold shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
-                  Plan Your Visit <ArrowRight className="w-5 h-5 ml-2" />
+                  Plan Your Visit <IconArrow className="w-5 h-5 ml-2" />
                 </Button>
               </Link>
               <a
@@ -592,7 +584,7 @@ export default function Index() {
                 rel="noopener noreferrer"
               >
                 <Button className="border-2 border-white/30 text-white hover:bg-white/10 rounded-full px-10 py-6 text-lg font-semibold bg-transparent transition-all hover:-translate-y-1">
-                  <MapPin className="w-5 h-5 mr-2" /> Get Directions
+                  <IconLocation className="w-5 h-5 mr-2" /> Get Directions
                 </Button>
               </a>
             </div>

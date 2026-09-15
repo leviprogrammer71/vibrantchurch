@@ -6,18 +6,18 @@ interface PageTransitionProps {
 }
 
 /**
- * Page transition wrapper for smooth route changes
- * Provides consistent fade and slide animations
+ * Page transition wrapper for smooth route changes.
+ * Uses a combined fade + upward slide with stagger-ready ease.
  */
 export function PageTransition({ children }: PageTransitionProps) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ 
-        duration: 0.4,
-        ease: [0.4, 0, 0.2, 1] // Custom easing for smooth feel
+      exit={{ opacity: 0, y: -16 }}
+      transition={{
+        duration: 0.5,
+        ease: [0.22, 1, 0.36, 1],
       }}
     >
       {children}

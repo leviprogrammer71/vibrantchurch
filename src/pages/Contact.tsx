@@ -1,7 +1,11 @@
-import { useState } from 'react';
+import { useState, type ComponentType, type SVGProps } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Send } from 'lucide-react';
+import {
+  IconLocation, IconSpeechBubble, IconHeart, IconClock, IconCross, IconMail,
+} from '@/icons';
+
+type SvgIcon = ComponentType<SVGProps<SVGSVGElement>>;
 import { Button } from '@/components/ui/button';
 import { SEO } from '@/components/SEO';
 import { Input } from '@/components/ui/input';
@@ -36,26 +40,26 @@ const fadeUp = {
   transition: { duration: 0.7, ease: 'easeOut' as const },
 };
 
-const contactInfo = [
+const contactInfo: { Icon: SvgIcon; title: string; lines: string[]; href?: string }[] = [
   {
-    iconSrc: '/images/elements/icons/location-circle.png',
+    Icon: IconLocation,
     title: 'Address',
     lines: [churchInfo?.fullAddress ?? '113 Conestoga Street, Terre Hill, PA 17581'],
   },
   {
-    iconSrc: '/images/elements/icons/speech-bubble.png',
+    Icon: IconSpeechBubble,
     title: 'Phone',
-    lines: [churchInfo?.phone ?? '(717) 445-0879'],
+    lines: [churchInfo?.phone ?? '(559) 207-8144'],
     href: `tel:${churchInfo?.phone ?? ''}`,
   },
   {
-    iconSrc: '/images/elements/icons/heart.png',
+    Icon: IconHeart,
     title: 'Email',
     lines: [churchInfo?.email ?? 'hello@vibrantchurchterrehill.org'],
     href: `mailto:${churchInfo?.email ?? ''}`,
   },
   {
-    iconSrc: '/images/elements/icons/clock-circle.png',
+    Icon: IconClock,
     title: 'Office Hours',
     lines: ['Mon–Thu: 8:30 AM – 4:30 PM', 'Friday: 8:30 AM – 12:00 PM'],
   },
@@ -119,7 +123,7 @@ export default function Contact() {
     <div className="min-h-screen bg-brand-cream">
       <SEO
         title="Contact Vibrant Church — Terre Hill, PA"
-        description="Get in touch with Vibrant Church at 113 Conestoga Street, Terre Hill, PA 17581. Call (717) 445-0879, email hello@vibrantchurchterrehill.org, or send a message. We'd love to hear from you — prayer requests welcome."
+        description="Get in touch with Vibrant Church at 113 Conestoga Street, Terre Hill, PA 17581. Call (559) 207-8144, email hello@vibrantchurchterrehill.org, or send a message. We'd love to hear from you — prayer requests welcome."
         path="/contact"
       />
       {/* ============================================================
@@ -202,7 +206,7 @@ export default function Contact() {
                       className="flex items-start gap-4"
                     >
                       <div className="shrink-0 w-12 h-12 rounded-full bg-brand-navy/5 flex items-center justify-center">
-                        <img src={item.iconSrc} alt="" className="w-7 h-7 object-contain" />
+                        <item.Icon className="w-7 h-7" />
                       </div>
                       {item.href ? (
                         <a href={item.href} className="hover:text-brand-gold transition-colors">
@@ -295,7 +299,7 @@ export default function Contact() {
                     'Sending...'
                   ) : (
                     <>
-                      <Send className="w-5 h-5 mr-2" />
+                      <IconMail className="w-5 h-5 mr-2" />
                       Send Message
                     </>
                   )}
@@ -322,7 +326,7 @@ export default function Contact() {
               className="rounded-2xl bg-white/5 border border-brand-gold/30 p-8 text-center flex flex-col items-center"
             >
               <div className="w-16 h-16 rounded-full bg-white/10 border border-brand-gold/40 flex items-center justify-center mb-5">
-                <img src="/images/elements/icons/heart.png" alt="" className="w-8 h-8 object-contain brightness-200" />
+                <IconHeart className="w-8 h-8" />
               </div>
               <h3 className="font-[Playfair_Display] text-xl font-semibold text-white mb-3">Need Prayer?</h3>
               <p className="text-white/70 leading-relaxed mb-6">
@@ -351,7 +355,7 @@ export default function Contact() {
               className="rounded-2xl bg-white/5 border border-brand-gold/30 p-8 text-center flex flex-col items-center"
             >
               <div className="w-16 h-16 rounded-full bg-white/10 border border-brand-gold/40 flex items-center justify-center mb-5">
-                <img src="/images/elements/icons/cross.png" alt="" className="w-8 h-8 object-contain brightness-200" />
+                <IconCross className="w-8 h-8" />
               </div>
               <h3 className="font-[Playfair_Display] text-xl font-semibold text-white mb-3">Plan Your Visit</h3>
               <p className="text-white/70 leading-relaxed mb-6">
@@ -378,7 +382,7 @@ export default function Contact() {
         />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-10">
-            <img src="/images/elements/icons/location.png" alt="" className="w-10 h-10 mx-auto mb-4 opacity-50" />
+            <IconLocation className="w-10 h-10 mx-auto mb-4 opacity-50" />
             <span className="block text-sm font-semibold uppercase tracking-widest text-brand-gold mb-4">
               Find Us
             </span>

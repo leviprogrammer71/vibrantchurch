@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { SEO } from '@/components/SEO';
 import { churchInfo } from '@/data/church';
+import {
+  IconCommunity, IconSpeechBubble, IconBible, IconDividerLeafy, IconHeart,
+} from '@/icons';
 
 const bgElements = {
   crossOrnament: '/images/elements/bg10.png',
@@ -52,13 +55,13 @@ export default function Ministries() {
             <div className="flex flex-wrap gap-4">
               <Link to="/about">
                 <Button className="bg-brand-gold text-brand-navy hover:bg-brand-gold/90 rounded-full px-8 font-semibold">
-                  <img src="/images/elements/icons/people-circle.png" alt="" className="w-5 h-5 mr-2 object-contain" />
+                  <IconCommunity className="w-5 h-5 mr-2" />
                   Learn About Us
                 </Button>
               </Link>
               <Link to="/contact">
                 <Button variant="outline" className="border-white/40 text-white hover:bg-white/10 rounded-full px-8 font-semibold bg-transparent">
-                  <img src="/images/elements/icons/speech-bubble.png" alt="" className="w-5 h-5 mr-2 brightness-200 object-contain" />
+                  <IconSpeechBubble className="w-5 h-5 mr-2" />
                   Contact Us
                 </Button>
               </Link>
@@ -85,11 +88,11 @@ export default function Ministries() {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <img src="/images/elements/icons/bible.png" alt="" className="w-12 h-12 mx-auto mb-4 opacity-60" />
+            <IconBible className="w-12 h-12 mx-auto mb-4 opacity-60" />
             <h2 className="font-[Playfair_Display] text-3xl font-bold text-brand-navy mb-3">
               Life Groups & Ministries
             </h2>
-            <img src="/images/elements/icons/divider-leafy.png" alt="" className="w-28 mx-auto mb-6 opacity-40" />
+            <IconDividerLeafy className="w-28 mx-auto mb-6 opacity-40" />
             <p className="text-lg text-brand-navy/70 mb-8 leading-relaxed">
               Our Life Groups meet throughout the week and are the heart of our church community. Whether you're looking for Bible study, prayer, fellowship, or service opportunities, we'd love to help you find your place.
             </p>
@@ -102,7 +105,7 @@ export default function Ministries() {
             </p>
             <Link to="/contact">
               <Button className="bg-brand-navy text-white hover:bg-brand-navy/90 rounded-full px-8 font-semibold">
-                <img src="/images/elements/icons/heart.png" alt="" className="w-5 h-5 mr-2 brightness-200 object-contain" />
+                <IconHeart className="w-5 h-5 mr-2" />
                 Get Connected
               </Button>
             </Link>

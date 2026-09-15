@@ -1,8 +1,14 @@
+import { type ComponentType, type SVGProps } from 'react';
 import { motion } from 'framer-motion';
-// No Lucide imports — using custom watercolor icons
 import { Button } from '@/components/ui/button';
 import { SEO } from '@/components/SEO';
 import { churchInfo, givePage } from '@/data/church';
+import {
+  IconHeart, IconCommunity, IconCross, IconCalendar, IconLocation,
+  IconSpeechBubble, IconQuoteOpen, IconDividerLeafy,
+} from '@/icons';
+
+type SvgIcon = ComponentType<SVGProps<SVGSVGElement>>;
 
 // =====================================================
 // Static assets
@@ -34,42 +40,42 @@ const fadeUp = {
 // =====================================================
 // Data
 // =====================================================
-const whyGiveCards = [
+const whyGiveCards: { Icon: SvgIcon; title: string; description: string; photo: string }[] = [
   {
-    iconSrc: '/images/elements/icons/heart.png',
+    Icon: IconHeart,
     title: 'Fund the Mission',
     description: 'Your gifts power community outreach, kids ministry, and youth programs that change lives.',
     photo: images.service,
   },
   {
-    iconSrc: '/images/elements/icons/people-circle.png',
+    Icon: IconCommunity,
     title: 'Build Community',
     description: 'Generosity keeps worship gatherings, small groups, and church events thriving for everyone.',
     photo: images.worship,
   },
   {
-    iconSrc: '/images/elements/icons/cross.png',
+    Icon: IconCross,
     title: 'Make an Impact',
     description: 'Every gift helps us serve Terre Hill and reach beyond our community with the love of Jesus.',
     photo: images.hangout,
   },
 ];
 
-const waysToGive = [
+const waysToGive: { Icon: SvgIcon; title: string; description: string; action: { label: string; href: string; external: boolean } | null }[] = [
   {
-    iconSrc: '/images/elements/icons/calendar.png',
+    Icon: IconCalendar,
     title: 'Give Online',
     description: 'Give quickly and securely anytime through our Church Center giving portal.',
     action: { label: 'Give Online', href: GIVING_URL, external: true },
   },
   {
-    iconSrc: '/images/elements/icons/location.png',
+    Icon: IconLocation,
     title: 'Give In Person',
     description: 'Join us Sunday mornings and give during the offering as part of our worship gathering.',
     action: null,
   },
   {
-    iconSrc: '/images/elements/icons/speech-bubble.png',
+    Icon: IconSpeechBubble,
     title: 'Mail a Check',
     description: `Make checks payable to Vibrant Church and mail to ${churchInfo?.fullAddress ?? '113 Conestoga Street, Terre Hill, PA 17581'}.`,
     action: null,
@@ -153,7 +159,7 @@ export default function Give() {
                     <img src={card.photo} alt={card.title} className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/60 via-transparent to-transparent" />
                     <div className="absolute -bottom-6 left-6 w-14 h-14 rounded-full bg-brand-gold flex items-center justify-center shadow-lg">
-                      <img src={card.iconSrc} alt="" className="w-9 h-9 object-contain" />
+                      <card.Icon className="w-9 h-9" />
                     </div>
                   </div>
                   <div className="p-6 pt-10">
@@ -198,7 +204,7 @@ export default function Give() {
                   className="rounded-2xl bg-white/5 border border-brand-gold/30 p-8 text-center flex flex-col items-center"
                 >
                   <div className="w-16 h-16 rounded-full bg-white/10 border border-brand-gold/40 flex items-center justify-center mb-5">
-                    <img src={way.iconSrc} alt="" className="w-8 h-8 object-contain brightness-200" />
+                    <way.Icon className="w-8 h-8" />
                   </div>
                   <h3 className="font-[Playfair_Display] text-xl font-semibold text-white mb-3">{way.title}</h3>
                   <p className="text-white/70 leading-relaxed mb-6">{way.description}</p>
@@ -219,13 +225,13 @@ export default function Give() {
           </div>
 
           <motion.div {...fadeUp} className="max-w-3xl mx-auto text-center">
-            <img src="/images/elements/icons/quote-open.png" alt="" className="w-10 h-10 mx-auto mb-3 opacity-40 brightness-200" />
+            <IconQuoteOpen className="w-10 h-10 mx-auto mb-3 opacity-40" />
             <p className="font-[Caveat] text-3xl sm:text-4xl text-brand-gold leading-snug">
               &ldquo;Each of you should give what you have decided in your heart to give, not reluctantly or
               under compulsion, for God loves a cheerful giver.&rdquo;
             </p>
             <p className="font-[Caveat] text-2xl text-white/70 mt-3">— 2 Corinthians 9:7</p>
-            <img src="/images/elements/icons/divider-leafy.png" alt="" className="w-32 mx-auto mt-6 opacity-30 brightness-200" />
+            <IconDividerLeafy className="w-32 mx-auto mt-6 opacity-30" />
           </motion.div>
         </div>
       </section>
@@ -246,7 +252,7 @@ export default function Give() {
 
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div {...fadeUp}>
-            <img src="/images/elements/icons/cross.png" alt="" className="w-10 h-10 mx-auto mb-4 opacity-60" />
+            <IconCross className="w-10 h-10 mx-auto mb-4 opacity-60" />
             <span className="block text-sm font-semibold uppercase tracking-widest text-brand-gold mb-4">
               Thank You
             </span>

@@ -1,10 +1,6 @@
-import { useState } from 'react';
+import { useState, type ComponentType, type SVGProps } from 'react';
 import { motion } from 'framer-motion';
-import {
-  Send,
-  CheckCircle2,
-  AlertCircle,
-} from 'lucide-react';
+// No Lucide imports — using custom SVG icon set
 import { Button } from '@/components/ui/button';
 import { SEO } from '@/components/SEO';
 import { Card, CardContent } from '@/components/ui/card';
@@ -14,6 +10,17 @@ import { Label } from '@/components/ui/label';
 import { usePageContent } from '@/hooks/usePageContent';
 import { churchInfo, planYourVisit, whatToExpect } from '@/data/church';
 import { submitToGoogleSheet } from '@/lib/google-sheet';
+import {
+  IconClock,
+  IconLocation,
+  IconCommunity,
+  IconCross,
+  IconBible,
+  IconHeart,
+  IconSpeechBubble,
+  IconMail,
+  IconArrow,
+} from '@/icons';
 
 // =====================================================
 // Google Maps
@@ -150,11 +157,13 @@ const defaultVisitContent: VisitPageContent = {
   },
 };
 
-const expectIconImages = [
-  '/images/elements/icons/people-circle.png',
-  '/images/elements/icons/cross.png',
-  '/images/elements/icons/bible.png',
-  '/images/elements/icons/heart.png',
+type SvgIcon = ComponentType<SVGProps<SVGSVGElement>>;
+
+const expectIcons: SvgIcon[] = [
+  IconCommunity,
+  IconCross,
+  IconBible,
+  IconHeart,
 ];
 
 // Static photo assets
@@ -365,7 +374,7 @@ export default function Visit() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-10 sm:gap-6 text-center">
             <motion.div {...fadeUp} className="flex flex-col items-center">
               <div className="w-16 h-16 rounded-full bg-brand-navy/5 flex items-center justify-center mb-4">
-                <img src="/images/elements/icons/clock-circle.png" alt="" className="w-10 h-10 object-contain" />
+                <IconClock className="w-10 h-10" />
               </div>
               <h3 className="text-sm font-semibold uppercase tracking-widest text-brand-gold mb-2">
                 {serviceBar.timeTitle ?? 'Service Time'}
@@ -378,7 +387,7 @@ export default function Visit() {
 
             <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.1 }} className="flex flex-col items-center">
               <div className="w-16 h-16 rounded-full bg-brand-navy/5 flex items-center justify-center mb-4">
-                <img src="/images/elements/icons/location.png" alt="" className="w-10 h-10 object-contain" />
+                <IconLocation className="w-10 h-10" />
               </div>
               <h3 className="text-sm font-semibold uppercase tracking-widest text-brand-gold mb-2">
                 {serviceBar.locationTitle ?? 'Location'}
@@ -393,7 +402,7 @@ export default function Visit() {
 
             <motion.div {...fadeUp} transition={{ duration: 0.7, delay: 0.2 }} className="flex flex-col items-center">
               <div className="w-16 h-16 rounded-full bg-brand-navy/5 flex items-center justify-center mb-4">
-                <img src="/images/elements/icons/people-circle.png" alt="" className="w-10 h-10 object-contain" />
+                <IconCommunity className="w-10 h-10" />
               </div>
               <h3 className="text-sm font-semibold uppercase tracking-widest text-brand-gold mb-2">
                 {serviceBar.attireTitle ?? 'What to Wear'}
@@ -435,7 +444,7 @@ export default function Visit() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {expectItems.map((item, index) => {
-              const iconSrc = expectIconImages[index % expectIconImages.length];
+              const ExpectIcon = expectIcons[index % expectIcons.length];
               return (
                 <motion.div
                   key={item?.title ?? index}
@@ -447,7 +456,7 @@ export default function Visit() {
                   <Card className="h-full bg-white border-none shadow-lg text-center">
                     <CardContent className="p-8">
                       <div className="w-18 h-18 rounded-full bg-brand-navy/5 border border-brand-gold/30 flex items-center justify-center mx-auto mb-5 p-3">
-                        <img src={iconSrc} alt="" className="w-10 h-10 object-contain" />
+                        <ExpectIcon className="w-10 h-10" />
                       </div>
                       <h3 className="font-[Playfair_Display] text-xl font-semibold text-brand-navy mb-2">
                         {item?.title ?? ''}
@@ -553,17 +562,17 @@ export default function Visit() {
               />
               <div className="space-y-2 text-white/80 text-lg mb-4">
                 <p className="flex items-center gap-2">
-                  <img src="/images/elements/icons/clock-circle.png" alt="" className="w-6 h-6 object-contain brightness-200" />
+                  <IconClock className="w-6 h-6" />
                   {churchInfo?.serviceTime ?? 'Sundays at 10:00 AM'}
                 </p>
                 <p className="flex items-center gap-2">
-                  <img src="/images/elements/icons/location.png" alt="" className="w-6 h-6 object-contain brightness-200" />
+                  <IconLocation className="w-6 h-6" />
                   {churchInfo?.fullAddress ?? '113 Conestoga Street, Terre Hill, PA 17581'}
                 </p>
                 <p className="flex items-center gap-2">
-                  <img src="/images/elements/icons/speech-bubble.png" alt="" className="w-6 h-6 object-contain brightness-200" />
+                  <IconSpeechBubble className="w-6 h-6" />
                   <a href={`tel:${churchInfo?.phone ?? ''}`} className="hover:underline">
-                    {churchInfo?.phone ?? '(717) 445-0879'}
+                    {churchInfo?.phone ?? '(559) 207-8144'}
                   </a>
                 </p>
               </div>
@@ -616,7 +625,7 @@ export default function Visit() {
                 <CardContent className="p-8 space-y-5">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 shrink-0 rounded-full bg-brand-navy/5 flex items-center justify-center">
-                      <img src="/images/elements/icons/location.png" alt="" className="w-7 h-7 object-contain" />
+                      <IconLocation className="w-7 h-7" />
                     </div>
                     <div>
                       <p className="font-semibold text-brand-navy">Address</p>
@@ -625,18 +634,18 @@ export default function Visit() {
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 shrink-0 rounded-full bg-brand-navy/5 flex items-center justify-center">
-                      <img src="/images/elements/icons/speech-bubble.png" alt="" className="w-7 h-7 object-contain" />
+                      <IconSpeechBubble className="w-7 h-7" />
                     </div>
                     <div>
                       <p className="font-semibold text-brand-navy">Phone</p>
                       <a href={`tel:${churchInfo?.phone ?? ''}`} className="text-brand-navy/70 hover:text-brand-navy">
-                        {churchInfo?.phone ?? '(717) 445-0879'}
+                        {churchInfo?.phone ?? '(559) 207-8144'}
                       </a>
                     </div>
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 shrink-0 rounded-full bg-brand-navy/5 flex items-center justify-center">
-                      <img src="/images/elements/icons/heart.png" alt="" className="w-7 h-7 object-contain" />
+                      <IconHeart className="w-7 h-7" />
                     </div>
                     <div>
                       <p className="font-semibold text-brand-navy">Email</p>
@@ -650,7 +659,7 @@ export default function Visit() {
                   </div>
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 shrink-0 rounded-full bg-brand-navy/5 flex items-center justify-center">
-                      <img src="/images/elements/icons/clock-circle.png" alt="" className="w-7 h-7 object-contain" />
+                      <IconClock className="w-7 h-7" />
                     </div>
                     <div>
                       <p className="font-semibold text-brand-navy">{contact.officeHoursTitle ?? 'Office Hours'}</p>
@@ -776,7 +785,7 @@ export default function Visit() {
                       >
                         {formStatus === 'submitting' ? (contact.submittingText ?? 'Sending...') : (
                           <>
-                            <Send className="w-5 h-5 mr-2" />
+                            <IconMail className="w-5 h-5 mr-2" />
                             {contact.submitButtonText ?? 'Send Message'}
                           </>
                         )}

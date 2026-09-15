@@ -259,8 +259,8 @@ export const footerContent = {
   
   // Social media links
   socialLinks: {
-    facebook: "https://www.facebook.com/terrehillvibrantchurch",
-    instagram: "https://www.facebook.com/terrehillvibrantchurch",
+    facebook: "https://www.facebook.com/share/19ZCVw6QcX/",
+    instagram: "https://www.instagram.com/vibrantchurchterrehill",
     youtube: "https://www.youtube.com/@vibrantchurchterrehill7120",
   },
 };

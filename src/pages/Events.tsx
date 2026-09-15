@@ -1,6 +1,10 @@
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ExternalLink, ArrowRight } from 'lucide-react';
+import {
+  IconCalendar, IconCommunity, IconCross,
+  IconHeart, IconDividerLeafy, IconGlobe,
+} from '@/icons';
 import { Button } from '@/components/ui/button';
 import { SEO } from '@/components/SEO';
 import { churchInfo, eventsPage } from '@/data/church';
@@ -20,7 +24,8 @@ const bgElements = {
   dramaticClouds: '/images/elements/bg33.png',
 };
 
-const CALENDAR_URL = churchInfo?.links?.events ?? 'https://vibrant-church-506100.churchcenter.com/calendar?view=gallery';
+const CALENDAR_URL = churchInfo?.links?.events ?? 'https://vibrant-church-506100.churchcenter.com/calendar';
+const CALENDAR_EMBED_SRC = 'https://vibrant-church-506100.churchcenter.com/assets/calendar_embed.js';
 
 const fadeUp = {
   initial: { opacity: 0, y: 30 },
@@ -29,36 +34,30 @@ const fadeUp = {
   transition: { duration: 0.7, ease: 'easeOut' as const },
 };
 
-// Sample events shown as a friendly fallback in case the Church Center
-// calendar embed is blocked from loading inside an iframe.
-const sampleEvents = [
-  {
-    title: 'Sunday Worship Gathering',
-    day: 'Every Sunday',
-    time: '10:00 AM',
-    location: '113 Conestoga Street, Terre Hill',
-  },
-  {
-    title: 'Youth Night',
-    day: 'Wednesdays',
-    time: '6:30 PM',
-    location: 'Vibrant Church Youth Room',
-  },
-  {
-    title: "Women's Bible Study",
-    day: 'Thursdays',
-    time: '9:30 AM',
-    location: 'Vibrant Church Fellowship Hall',
-  },
-  {
-    title: 'Community Serve Day',
-    day: 'Monthly',
-    time: '9:00 AM',
-    location: 'Terre Hill & Surrounding Areas',
-  },
-];
-
 export default function Events() {
+  const calendarRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!calendarRef.current) return;
+
+    // Remove any previously injected script to avoid duplicates on re-mount
+    const existing = calendarRef.current.querySelector('script');
+    if (existing) existing.remove();
+
+    const script = document.createElement('script');
+    script.src = CALENDAR_EMBED_SRC;
+    script.setAttribute('data-height', 'auto');
+    script.async = true;
+    calendarRef.current.appendChild(script);
+
+    return () => {
+      if (calendarRef.current) {
+        const s = calendarRef.current.querySelector('script');
+        if (s) s.remove();
+      }
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-brand-cream">
       <SEO
@@ -97,7 +96,7 @@ export default function Events() {
                 size="lg"
                 className="bg-brand-gold text-brand-navy hover:bg-brand-gold/90 font-semibold rounded-full px-8"
               >
-                <ExternalLink className="w-5 h-5 mr-2" />
+                <IconGlobe className="w-5 h-5 mr-2" />
                 View Full Calendar
               </Button>
             </a>
@@ -106,14 +105,13 @@ export default function Events() {
       </section>
 
       {/* ============================================================
-          RECURRING EVENTS
+          CHURCH CENTER CALENDAR EMBED
       ============================================================ */}
       <section className="relative py-20 lg:py-28 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-[0.06] pointer-events-none"
           style={{ backgroundImage: `url('${bgElements.texture}')` }}
         />
-        {/* Panoramic mountains — bottom accent */}
         <div
           className="absolute bottom-0 left-0 right-0 h-40 bg-cover bg-bottom opacity-[0.04] pointer-events-none"
           style={{ backgroundImage: `url('${bgElements.panoramicMountains}')` }}
@@ -122,56 +120,30 @@ export default function Events() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-14">
             <span className="block text-sm font-semibold uppercase tracking-widest text-brand-gold mb-4">
-              Weekly &amp; Monthly
+              Upcoming Events
             </span>
             <h2 className="font-[Playfair_Display] text-3xl sm:text-4xl font-bold text-brand-navy leading-tight mb-4">
               What's happening at <em className="italic text-brand-gold font-normal">Vibrant.</em>
             </h2>
             <p className="text-lg text-brand-navy/60">
-              Here are some of the ways you can get connected each week.
+              Browse our calendar to find your next step — sign up and RSVP right here.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8 mb-16">
-            {sampleEvents.map((event, index) => (
-              <motion.div
-                key={event.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group rounded-2xl bg-white shadow-lg hover:shadow-xl p-7 transition-all duration-300 hover:-translate-y-1 border border-transparent hover:border-brand-gold/15"
-              >
-                <div className="flex items-start gap-5">
-                  <div className="shrink-0 w-14 h-14 rounded-xl bg-brand-navy/5 flex flex-col items-center justify-center">
-                    <img src="/images/elements/icons/calendar-circle.png" alt="" className="w-8 h-8 object-contain" />
-                  </div>
-                  <div className="flex-1">
-                    <h4 className="font-[Playfair_Display] text-xl font-semibold text-brand-navy mb-3">
-                      {event.title}
-                    </h4>
-                    <div className="space-y-1.5 text-sm text-brand-navy/60">
-                      <div className="flex items-center gap-2">
-                        <img src="/images/elements/icons/clock-circle.png" alt="" className="w-4 h-4 object-contain" />
-                        {event.day} · {event.time}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <img src="/images/elements/icons/location-circle.png" alt="" className="w-4 h-4 object-contain" />
-                        {event.location}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          {/* Church Center embedded calendar */}
+          <motion.div
+            {...fadeUp}
+            className="rounded-2xl bg-white shadow-lg p-4 sm:p-8 mb-16 border border-brand-gold/10"
+          >
+            <div ref={calendarRef} className="min-h-[400px]" />
+          </motion.div>
 
           {/* Full Calendar CTA */}
           <motion.div
             {...fadeUp}
             className="rounded-2xl bg-brand-navy p-10 sm:p-14 text-center shadow-xl"
           >
-            <img src="/images/elements/icons/calendar.png" alt="" className="w-14 h-14 mx-auto mb-6 brightness-200 opacity-80 object-contain" />
+            <IconCalendar className="w-14 h-14 mx-auto mb-6 opacity-80" />
             <h3 className="font-[Playfair_Display] text-2xl sm:text-3xl font-bold text-white mb-4">
               See the full calendar
             </h3>
@@ -180,7 +152,7 @@ export default function Events() {
             </p>
             <a href={CALENDAR_URL} target="_blank" rel="noopener noreferrer">
               <Button size="lg" className="bg-brand-gold text-brand-navy hover:bg-brand-gold/90 font-semibold rounded-full px-10">
-                <ExternalLink className="w-5 h-5 mr-2" />
+                <IconGlobe className="w-5 h-5 mr-2" />
                 View Our Calendar
               </Button>
             </a>
@@ -203,14 +175,14 @@ export default function Events() {
 
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div {...fadeUp}>
-            <img src="/images/elements/icons/cross.png" alt="" className="w-10 h-10 mx-auto mb-4 opacity-50" />
+            <IconCross className="w-10 h-10 mx-auto mb-4 opacity-50" />
             <span className="block text-sm font-semibold uppercase tracking-widest text-brand-gold mb-4">
               Get Involved
             </span>
             <h2 className="font-[Playfair_Display] text-3xl sm:text-4xl font-bold text-brand-navy leading-tight mb-3">
               There's a place for you.
             </h2>
-            <img src="/images/elements/icons/divider-leafy.png" alt="" className="w-28 mx-auto mb-6 opacity-40" />
+            <IconDividerLeafy className="w-28 mx-auto mb-6 opacity-40" />
             <p className="text-lg text-brand-navy/70 leading-relaxed mb-10 max-w-2xl mx-auto">
               Whether it's joining a small group, serving on a team, or simply showing up to an event —
               community at Vibrant Church starts with a next step. We'd love to help you find yours.
@@ -218,7 +190,7 @@ export default function Events() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/contact">
                 <Button size="lg" className="bg-brand-navy text-white hover:bg-brand-navy/90 font-semibold">
-                  <img src="/images/elements/icons/people-circle.png" alt="" className="w-5 h-5 mr-2 brightness-200 object-contain" />
+                  <IconCommunity className="w-5 h-5 mr-2" />
                   Get in Touch
                 </Button>
               </Link>
@@ -228,7 +200,7 @@ export default function Events() {
                   variant="outline"
                   className="border-brand-navy text-brand-navy hover:bg-brand-navy/5 font-semibold"
                 >
-                  <img src="/images/elements/icons/heart.png" alt="" className="w-5 h-5 mr-2 object-contain" />
+                  <IconHeart className="w-5 h-5 mr-2" />
                   Find a Way to Serve
                 </Button>
               </Link>
