@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <url>
+    <loc>https://vibranttchurch.org/</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://vibranttchurch.org/images/photos/service.jpg</image:loc>
+      <image:title>Vibrant Church Sunday worship service in Terre Hill PA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://vibranttchurch.org/images/photos/outside.jpg</image:loc>
+      <image:title>Vibrant Church building exterior Terre Hill Pennsylvania</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://vibranttchurch.org/visit</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://vibranttchurch.org/images/photos/outside1.jpg</image:loc>
+      <image:title>Plan your visit to Vibrant Church Terre Hill</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://vibranttchurch.org/about</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://vibranttchurch.org/images/staff/elderboard.jpg</image:loc>
+      <image:title>Vibrant Church elder board and leadership team</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://vibranttchurch.org/watch</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://vibranttchurch.org/images/photos/worship.jpg</image:loc>
+      <image:title>Watch sermons and messages from Vibrant Church</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://vibranttchurch.org/events</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://vibranttchurch.org/images/photos/event.jpg</image:loc>
+      <image:title>Events and gatherings at Vibrant Church Terre Hill</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://vibranttchurch.org/give</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://vibranttchurch.org/contact</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>

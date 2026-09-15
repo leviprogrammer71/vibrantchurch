@@ -2,22 +2,40 @@
 
 export const churchInfo = {
   name: "Vibrant Church",
-  tagline: "A Church Where You Belong",
-  heroSubtext: "Join Vibrant Church in Terre Hill as we worship God, grow in faith, and build a loving community together.",
-  mission: "We exist to love God, love people, and welcome everyone.",
-  missionExtended: "Our mission is to help people encounter Jesus, grow in their faith, and live out God's love in everyday life.",
+  tagline: "A Church That Loves God and People",
+  heroSubtext: "Welcome to Vibrant Church — a warm, welcoming church family located in the heart of Terre Hill.",
+  mission: "We exist to glorify God by making disciples who love God, love people, and serve the world.",
+  missionExtended: "At Vibrant Church, you'll find a place to worship God, build meaningful relationships, and discover your purpose. From inspiring worship to practical teaching and caring groups, our heart is to help people love God and love others.",
   address: "113 Conestoga Street",
   city: "Terre Hill",
   state: "PA",
   zip: "17581",
   fullAddress: "113 Conestoga Street, Terre Hill, PA 17581",
-  phone: "+1 (559) 207-8144",
-  email: "hello@vibranttchurch.org",
+  phone: "(717) 445-0879",
+  email: "hello@vibrantchurchterrehill.org",
   serviceTime: "Sundays at 10:00 AM",
+  officeHours: "Mon–Thu: 8:30 AM – 4:30 PM | Friday: 8:30 AM – 12:00 PM",
   social: {
     facebook: "https://facebook.com/vibrantchurch",
     instagram: "https://instagram.com/vibrantchurch",
-    youtube: "https://youtube.com/@vibrantchurch",
+    youtube: "https://www.youtube.com/@vibrantchurchterrehill7120",
+  },
+  links: {
+    giving: "https://vibrant-church-506100.churchcenter.com/giving",
+    events: "https://vibrant-church-506100.churchcenter.com/calendar?view=gallery",
+    youtube: "https://www.youtube.com/@vibrantchurchterrehill7120",
+  },
+  emails: {
+    hello: "hello@vibrantchurchterrehill.org",
+    info: "info@vibrantchurchterrehill.org",
+    prayer: "prayer@vibrantchurchterrehill.org",
+    pastor: "pastor@vibrantchurchterrehill.org",
+    admin: "admin@vibrantchurchterrehill.org",
+    youth: "youth@vibrantchurchterrehill.org",
+    worship: "worship@vibrantchurchterrehill.org",
+    groups: "groups@vibrantchurchterrehill.org",
+    kids: "kids@vibrantchurchterrehill.org",
+    events: "events@vibrantchurchterrehill.org",
   },
 };
 
@@ -26,195 +44,143 @@ export const navigationLinks = [
   { name: "Visit", path: "/visit" },
   { name: "About", path: "/about" },
   { name: "Watch", path: "/watch" },
+  { name: "Events", path: "/events" },
   { name: "Give", path: "/give" },
   { name: "Contact", path: "/contact" },
 ];
 
-export const welcomeMessage = `Welcome to Vibrant Church — a warm, welcoming church family located in the heart of Terre Hill. Whether you've been following Jesus for years or you're just beginning to explore faith, you are welcome here. Our desire is to create a place where people feel loved, accepted, and encouraged to grow spiritually.`;
+export const welcomeMessage = `At Vibrant Church, you'll find a place to worship God, build meaningful relationships, and discover your purpose. From inspiring worship to practical teaching and caring groups, our heart is to help people love God and love others.`;
 
-export const serviceDescription = `Join us for meaningful worship, a Bible-centered message, and genuine community.`;
+export const serviceDescription = `A time of worship, teaching, and encouragement.`;
 
 export const whatToExpect = [
   {
-    title: "Friendly, welcoming people",
-    description: "You'll be greeted with warm smiles and genuine hospitality from the moment you arrive.",
+    title: "Friendly People",
+    description: "Warm smiles and genuine hospitality from the moment you arrive.",
+    icon: "users",
   },
   {
-    title: "Casual and comfortable atmosphere",
-    description: "Come as you are! Jeans, shorts, or dresses—whatever makes you comfortable.",
+    title: "Inspiring Worship",
+    description: "Uplifting music that helps connect your heart to God.",
+    icon: "music",
   },
   {
-    title: "Inspiring worship music",
-    description: "Experience uplifting contemporary music that helps connect your heart to God.",
+    title: "Bible-Based Teaching",
+    description: "Practical, relevant messages from the Bible that apply to everyday life.",
+    icon: "book",
   },
   {
-    title: "A practical, Bible-based message",
-    description: "Practical messages from the Bible that apply to your everyday life.",
+    title: "Kids & Students",
+    description: "Safe, fun, and age-appropriate programs for children and teens.",
+    icon: "heart",
   },
   {
-    title: "A safe and loving place for kids",
-    description: "We love kids! Safe, fun, and age-appropriate programs for children.",
+    title: "Groups for Every Stage",
+    description: "People to walk alongside you in faith and life.",
+    icon: "users",
   },
   {
-    title: "A community that truly cares",
-    description: "Life is better together. Find genuine friendships and support.",
+    title: "A Community that Cares",
+    description: "Life is better together. You're not just a face in the crowd.",
+    icon: "heart",
   },
 ];
 
 export const nextSteps = [
   { title: "Plan a Visit", path: "/visit", description: "Come see what we're all about" },
-  { title: "Join a Small Group", path: "/ministries", description: "Life is better together" },
-  { title: "Serve on a Team", path: "/contact", description: "Use your gifts to serve others" },
+  { title: "Watch a Message", path: "/watch", description: "Grow in faith, be encouraged" },
+  { title: "Find a Group", path: "/about", description: "Life is better together" },
   { title: "Give Online", path: "/give", description: "Support our mission" },
-];
-
-export const upcomingEvents = [
-  {
-    id: 1,
-    title: "Sunday Worship Service",
-    date: "Every Sunday",
-    time: "10:00 AM",
-    description: "Join us for worship, fellowship, and an inspiring message.",
-    recurring: true,
-  },
-  {
-    id: 2,
-    title: "Community Prayer Night",
-    date: "January 22, 2026",
-    time: "7:00 PM",
-    description: "Come together for a powerful evening of prayer and intercession.",
-    recurring: false,
-  },
-  {
-    id: 3,
-    title: "Youth Group Gathering",
-    date: "Every Wednesday",
-    time: "6:30 PM",
-    description: "Middle and high school students connect through games, worship, and small groups.",
-    recurring: true,
-  },
-  {
-    id: 4,
-    title: "Women's Bible Study",
-    date: "January 25, 2026",
-    time: "9:30 AM",
-    description: "Dive deep into Scripture with other women seeking to grow in faith.",
-    recurring: false,
-  },
-  {
-    id: 5,
-    title: "Family Game Night",
-    date: "February 7, 2026",
-    time: "6:00 PM",
-    description: "Bring the whole family for food, fun, and fellowship!",
-    recurring: false,
-  },
-  {
-    id: 6,
-    title: "Men's Breakfast",
-    date: "February 14, 2026",
-    time: "8:00 AM",
-    description: "Good food, great fellowship, and encouragement for men of all ages.",
-    recurring: false,
-  },
-];
-
-export const ministries = [
-  {
-    id: "kids",
-    title: "Kids Ministry",
-    shortDescription: "Nurturing faith in the next generation.",
-    description: "Our children's ministry helps kids learn about God through stories, activities, and friendships in a safe and caring environment.",
-    image: "/src/assets/church/youth-group.jpeg",
-    contact: "kids@vibranttchurch.org",
-  },
-  {
-    id: "youth",
-    title: "Youth Ministry",
-    shortDescription: "Helping teens grow in faith.",
-    description: "We provide a space for teens to grow in their faith, build friendships, and discover who God created them to be.",
-    image: "/src/assets/church/youth-group.jpeg",
-    contact: "youth@vibranttchurch.org",
-  },
-  {
-    id: "small-groups",
-    title: "Small Groups",
-    shortDescription: "Life is better together in authentic community.",
-    description: "Small Groups are where real life happens. These groups meet regularly to study the Bible, pray together, and build meaningful relationships.",
-    image: "/src/assets/church/prayer-group.jpeg",
-    contact: "groups@vibranttchurch.org",
-  },
-  {
-    id: "worship",
-    title: "Worship Team",
-    shortDescription: "Leading our community into God's presence through music.",
-    description: "Our worship ministry leads the church in heartfelt praise and worship every Sunday.",
-    image: "/src/assets/church/worship.png",
-    contact: "worship@vibranttchurch.org",
-  },
-  {
-    id: "outreach",
-    title: "Community Outreach",
-    shortDescription: "Serving our neighbors and making a difference locally.",
-    description: "We are committed to serving Terre Hill and surrounding communities by meeting practical needs and sharing God's love.",
-    image: "/src/assets/church/outreach.jpeg",
-    contact: "outreach@vibranttchurch.org",
-  },
 ];
 
 export const leadership = [
   {
-    name: "Samy Kengela",
-    role: "Senior Pastor",
-    bio: "Pastor Samy leads Vibrant Church with a passion for reaching others for Christ. He and his wife Shireen are dedicated to helping people grow in their relationship with Jesus.",
-    image: "/src/assets/church/leadership-2.png",
+    name: "Samy & Shireen Kengela",
+    role: "Lead Elders",
+    bio: "Samy and Shireen lead Vibrant Church with a passion for reaching others for Christ and helping people grow in their relationship with Jesus.",
+    image: "/images/staff/samy-shireenkengela_Leadelders.jpg",
   },
   {
-    name: "Brian Sauder",
-    role: "Overseer",
-    bio: "Brian provides apostolic oversight and guidance to our church family.",
-    image: "/src/assets/church/leadership-1.png",
+    name: "Craig & Denise Sensenig",
+    role: "Elders",
+    bio: "Craig and Denise serve as elders, providing pastoral care and spiritual guidance to the church family.",
+    image: "/images/staff/Craig-Denisesensenig_elders.jpg",
+  },
+  {
+    name: "Ryan & Jen Eberly",
+    role: "Elders",
+    bio: "Ryan and Jen serve as elders, caring for the church community and helping lead with wisdom and love.",
+    image: "/images/staff/Ryan-jeneberly_elders.jpg",
+  },
+  {
+    name: "Nelson & Sue",
+    role: "Elders",
+    bio: "Nelson and Sue serve as elders, bringing years of faithful service and a heart for shepherding others.",
+    image: "/images/staff/nelson-sue_elders.jpg",
+  },
+];
+
+export const missionPillars = [
+  {
+    title: "Love God",
+    description: "We pursue a deeper relationship with God through worship, prayer, and His Word.",
+    icon: "cross",
+  },
+  {
+    title: "Love People",
+    description: "We build authentic relationships and create a church family where everyone belongs.",
+    icon: "people",
+  },
+  {
+    title: "Serve the World",
+    description: "We use our gifts to make a difference in our community and beyond.",
+    icon: "globe",
+  },
+];
+
+export const churchValues = [
+  {
+    title: "The Bible is our guide",
+    description: "We believe Scripture is God's Word and the foundation for our faith and daily living.",
+  },
+  {
+    title: "Grace changes everything",
+    description: "We believe in the power of God's grace to forgive, restore, and transform.",
+  },
+  {
+    title: "Community is essential",
+    description: "We were never meant to do life alone. We grow together in faith and encouragement.",
+  },
+  {
+    title: "Generosity is our joy",
+    description: "We give our time, talents, and resources as an act of worship.",
+  },
+];
+
+export const timeline = [
+  {
+    year: "1948",
+    description: "Our church is founded on faith and prayer.",
+  },
+  {
+    year: "1970s",
+    description: "A growing church with a heart for families.",
+  },
+  {
+    year: "Today",
+    description: "Still committed to the same mission.",
   },
 ];
 
 export const aboutUs = {
-  whoWeAre: `Vibrant Church is a community of people who love God and love one another. We believe church should feel like home — a place where you are accepted, supported, and encouraged.
-
-We are passionate about helping people grow in their relationship with Jesus and discover the purpose God has for their lives.`,
+  whoWeAre: `Vibrant Church is a community of people who love God and love one another. We exist to help people know Jesus and follow Him together.`,
+  story: `Vibrant Church began with a simple belief — that the love of Jesus can transform lives and communities. For generations, we've been committed to hearing God's Word, loving our neighbors, and making a lasting impact in Terre Hill and beyond.`,
   vision: "To be a church that brings hope, healing, and new life to our community through the love of Jesus Christ.",
-  values: [
-    {
-      title: "Jesus First",
-      description: "Everything we do points to Him",
-    },
-    {
-      title: "People Matter",
-      description: "Everyone is valued and loved",
-    },
-    {
-      title: "Authentic Community",
-      description: "We grow better together",
-    },
-    {
-      title: "Biblical Truth",
-      description: "God's Word guides our lives",
-    },
-    {
-      title: "Compassion & Service",
-      description: "We serve our community with love",
-    },
-  ],
-  beliefs: [
-    "The Bible is the inspired Word of God",
-    "Jesus Christ is the Son of God and Savior of the world",
-    "Salvation is found through faith in Jesus",
-    "The Holy Spirit guides and empowers believers",
-    "The Church exists to share God's love and truth",
-  ],
+  values: churchValues,
 };
 
 export const planYourVisit = {
-  intro: "We know visiting a new church can feel intimidating — we want you to feel comfortable from the moment you arrive.",
+  intro: "Whether you've been to church your whole life or you're just checking things out, you are always welcome here.",
   whatHappens: {
     title: "What Happens on Sunday",
     description: "Our services include:",
@@ -224,39 +190,39 @@ export const planYourVisit = {
       "A message based on the Bible",
       "Time to connect with others",
     ],
-    note: "Come as you are — dress casually and feel at home.",
+    note: "Come as you are — you'll see everything from jeans to dress clothes.",
   },
   kids: "We love kids! Vibrant Church offers a safe, loving environment where children can learn about God in a fun and engaging way.",
 };
 
 export const watchPage = {
-  title: "Watch Online",
-  description: "Join us online or watch past messages anytime.",
-  subtext: "Experience uplifting worship and encouraging messages that help you grow in your faith.",
+  title: "Watch & Listen",
+  description: "Messages that help you know Jesus more deeply and live it out every day.",
+  subtext: "Grow in faith. Be encouraged.",
 };
 
 export const givePage = {
   title: "Give Generously",
-  description: "Your generosity helps make ministry possible.",
+  description: "Your generosity fuels the mission of Vibrant Church.",
   impact: [
-    "Community outreach",
+    "Community outreach and local missions",
     "Kids and youth ministries",
-    "Worship and teaching",
-    "Church operations",
+    "Worship and Bible teaching",
+    "Church operations and building",
   ],
   thanks: "Thank you for being part of what God is doing here.",
 };
 
 export const contactPage = {
-  title: "Get Connected",
-  description: "We would love to connect with you.",
-  subtext: "Whether you have a question, need prayer, or want to get involved, we're here for you.",
+  title: "Get in Touch",
+  description: "We'd love to hear from you.",
+  subtext: "Have a question before your visit? We're here to help!",
   formIntro: "Send us a message and we'll get back to you soon.",
 };
 
 export const eventsPage = {
   title: "Events & Gatherings",
-  description: "Stay connected with everything happening at Vibrant Church! From worship nights and Bible studies to community outreach and special services — there is always something happening.",
+  description: "Stay connected with everything happening at Vibrant Church.",
 };
 
-export const footerTagline = "A church where you belong.";
+export const footerTagline = "A church that loves God and people.";

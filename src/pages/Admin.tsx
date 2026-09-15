@@ -42,7 +42,7 @@ export default function Admin() {
     }
   }, [user, isAdmin, loading, adminStatusReady, navigate]);
 
-  // Load existing content from database
+  // Load existing content from database / localStorage
   useEffect(() => {
     if (allContent) {
       const newContentData: Record<string, Record<string, unknown>> = {};
@@ -165,7 +165,7 @@ export default function Admin() {
                 Media Library
               </CardTitle>
               <CardDescription>
-                Upload and manage images used across the site. Coming soon!
+                Upload and manage images used across the site.
               </CardDescription>
             </CardHeader>
             <CardContent>

@@ -176,7 +176,49 @@ export function VisitPageEditor({ initialData, onSave, isSaving }: VisitPageEdit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await onSave(formData);
+      // Transform flat structure to nested structure expected by Visit.tsx
+      const nestedData = {
+        hero: {
+          title: formData.heroTitle,
+          description: formData.heroDescription,
+        },
+        serviceInfo: {
+          serviceTimeTitle: 'Service Time',
+          locationTitle: 'Location',
+          parkingTitle: 'Parking',
+          parkingDescription: formData.parkingDescription,
+        },
+        findUs: {
+          headline: 'How to Find Us',
+        },
+        whatHappens: {
+          headline: formData.whatHappensHeadline,
+          description: formData.whatHappensDescription,
+          items: formData.whatHappensItems,
+        },
+        gettingHere: {
+          headline: 'Getting Here',
+          addressLabel: 'Address',
+          dressCodeLabel: 'What to Wear',
+          dressCodeText: formData.dressCodeText,
+          arrivalLabel: 'When to Arrive',
+          arrivalText: formData.arrivalText,
+          buttonText: formData.directionsButtonText,
+        },
+        kids: {
+          tagText: 'Kids Ministry',
+          headline: formData.kidsHeadline,
+          description: formData.kidsDescription,
+          features: formData.kidsFeatures,
+          footnote: formData.kidsFootnote,
+        },
+        cta: {
+          headline: formData.ctaHeadline,
+          description: formData.ctaDescription,
+          buttonText: formData.ctaButtonText,
+        },
+      };
+      await onSave(nestedData as any);
       toast({
         title: 'Visit page saved!',
         description: 'Your changes are now live.',

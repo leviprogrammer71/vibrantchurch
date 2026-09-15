@@ -9,8 +9,11 @@ lerna-debug.log*
 
 node_modules
 dist
+dist-*
 dist-ssr
 *.local
+vite.config.ts.timestamp-*.mjs
+.fuse_hidden*
 
 # Editor directories and files
 .vscode/*
@@ -26,3 +29,5 @@ dist-ssr
 # Environment variables
 .env
 .env.*
+.claude/
+skills-lock.json

@@ -11,122 +11,87 @@
   src: url('https://fonts.gstatic.com/s/playfairdisplay/v37/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKdFvXDXbtM.woff2') format('woff2');
 }
 
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/playfairdisplay/v37/nuFRD-vYSZviVYUb_rj3ij__anPXDTnCjmHKM4nYO7KN_qiTbtbK-F2rA.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Caveat';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/caveat/v18/WnznHAc5bAfYB2QRah7pcpNvOx-pjfJ9SIKjYBxPigs.woff2') format('woff2');
+}
+
 :root {
-  /* Primary - Deep Navy Blue (trust, depth, spiritual) */
-  --primary: hsl(215 65% 25%);
+  /* ═══════════════════════════════════════════════════
+     BRAND PALETTE — canonical hex, frozen
+     Navy  #1a365d  → hsl(215 56% 23%)
+     Gold  #d4a843  → hsl(42 63% 55%)
+     Cream #f5f0e8  → hsl(37 39% 94%)
+     Gold-hover #c49a3a → hsl(42 54% 50%)
+  ═══════════════════════════════════════════════════ */
+
+  /* shadcn/ui semantic tokens — aligned to brand palette */
+  --primary: hsl(215 56% 23%);
   --primary-foreground: hsl(0 0% 100%);
-  
-  /* Secondary - Warm Gold/Amber (warmth, welcome, hope) */
-  --secondary: hsl(38 92% 50%);
-  --secondary-foreground: hsl(215 65% 15%);
-  
-  /* Accent - Soft Sky Blue */
+
+  --secondary: hsl(42 63% 55%);
+  --secondary-foreground: hsl(215 56% 15%);
+
   --accent: hsl(200 70% 50%);
   --accent-foreground: hsl(0 0% 100%);
-  
-  /* Background - Soft Cream White */
-  --background: hsl(40 30% 98%);
+
+  --background: hsl(37 39% 94%);
   --foreground: hsl(215 40% 20%);
-  
-  /* Card - Pure White */
+
   --card: hsl(0 0% 100%);
   --card-foreground: hsl(215 40% 20%);
-  
+
   --popover: hsl(0 0% 100%);
   --popover-foreground: hsl(215 40% 20%);
-  
-  /* Muted - Soft Gray */
-  --muted: hsl(40 15% 94%);
+
+  --muted: hsl(37 20% 91%);
   --muted-foreground: hsl(215 15% 45%);
-  
+
   --destructive: hsl(0 84% 60%);
   --destructive-foreground: hsl(0 0% 98%);
-  
-  --border: hsl(40 20% 88%);
-  --input: hsl(40 20% 88%);
-  --ring: hsl(215 65% 35%);
+
+  --border: hsl(37 20% 88%);
+  --input: hsl(37 20% 88%);
+  --ring: hsl(215 56% 33%);
   --radius: 0.5rem;
-  
-  /* Church-specific tokens */
-  --church-gold: hsl(38 92% 50%);
-  --church-gold-light: hsl(40 85% 65%);
-  --church-navy: hsl(215 65% 25%);
-  --church-navy-light: hsl(215 55% 40%);
-  --church-cream: hsl(40 30% 98%);
+
+  /* Church-specific tokens — now aligned to canonical hex */
+  --church-gold: hsl(42 63% 55%);
+  --church-gold-light: hsl(42 60% 68%);
+  --church-navy: hsl(215 56% 23%);
+  --church-navy-light: hsl(215 45% 38%);
+  --church-cream: hsl(37 39% 94%);
   --church-warm-gray: hsl(30 10% 60%);
-  
+
   /* Gradients */
-  --gradient-hero: linear-gradient(135deg, hsl(215 65% 25%) 0%, hsl(215 55% 35%) 50%, hsl(200 60% 40%) 100%);
-  --gradient-gold: linear-gradient(135deg, hsl(38 92% 50%) 0%, hsl(45 95% 55%) 100%);
-  --gradient-warm: linear-gradient(180deg, hsl(40 30% 98%) 0%, hsl(40 25% 95%) 100%);
-  
+  --gradient-hero: linear-gradient(135deg, hsl(215 56% 23%) 0%, hsl(215 45% 33%) 50%, hsl(200 50% 38%) 100%);
+  --gradient-gold: linear-gradient(135deg, hsl(42 63% 55%) 0%, hsl(45 65% 60%) 100%);
+  --gradient-warm: linear-gradient(180deg, hsl(37 39% 94%) 0%, hsl(37 30% 91%) 100%);
+
   /* Shadows */
-  --shadow-soft: 0 4px 20px -4px hsl(215 65% 25% / 0.1);
-  --shadow-glow: 0 8px 40px -8px hsl(38 92% 50% / 0.3);
-  
+  --shadow-soft: 0 4px 20px -4px hsl(215 56% 23% / 0.1);
+  --shadow-glow: 0 8px 40px -8px hsl(42 63% 55% / 0.3);
+
   /* Sidebar (keeping for compatibility) */
   --sidebar-background: hsl(0 0% 98%);
   --sidebar-foreground: hsl(215 40% 26%);
-  --sidebar-primary: hsl(215 65% 25%);
+  --sidebar-primary: hsl(215 56% 23%);
   --sidebar-primary-foreground: hsl(0 0% 98%);
-  --sidebar-accent: hsl(40 15% 95%);
-  --sidebar-accent-foreground: hsl(215 65% 25%);
+  --sidebar-accent: hsl(37 20% 95%);
+  --sidebar-accent-foreground: hsl(215 56% 23%);
   --sidebar-border: hsl(220 13% 91%);
-  --sidebar-ring: hsl(215 65% 45%);
-}
-
-.dark {
-  --primary: hsl(38 92% 55%);
-  --primary-foreground: hsl(215 65% 15%);
-  
-  --secondary: hsl(215 55% 45%);
-  --secondary-foreground: hsl(0 0% 98%);
-  
-  --accent: hsl(200 60% 50%);
-  --accent-foreground: hsl(0 0% 100%);
-  
-  --background: hsl(215 40% 10%);
-  --foreground: hsl(40 20% 95%);
-  
-  --card: hsl(215 35% 15%);
-  --card-foreground: hsl(40 20% 95%);
-  
-  --popover: hsl(215 35% 15%);
-  --popover-foreground: hsl(40 20% 95%);
-  
-  --muted: hsl(215 30% 18%);
-  --muted-foreground: hsl(40 10% 65%);
-  
-  --destructive: hsl(0 62% 30%);
-  --destructive-foreground: hsl(0 0% 98%);
-  
-  --border: hsl(215 30% 20%);
-  --input: hsl(215 30% 20%);
-  --ring: hsl(38 92% 55%);
-  
-  /* Church tokens - dark mode */
-  --church-gold: hsl(38 92% 55%);
-  --church-gold-light: hsl(40 85% 60%);
-  --church-navy: hsl(215 55% 45%);
-  --church-navy-light: hsl(215 50% 55%);
-  --church-cream: hsl(40 20% 95%);
-  --church-warm-gray: hsl(30 10% 65%);
-  
-  --gradient-hero: linear-gradient(135deg, hsl(215 40% 15%) 0%, hsl(215 35% 20%) 50%, hsl(200 50% 25%) 100%);
-  --gradient-gold: linear-gradient(135deg, hsl(38 92% 55%) 0%, hsl(45 90% 60%) 100%);
-  --gradient-warm: linear-gradient(180deg, hsl(215 40% 10%) 0%, hsl(215 35% 12%) 100%);
-  
-  --shadow-soft: 0 4px 20px -4px hsl(0 0% 0% / 0.3);
-  --shadow-glow: 0 8px 40px -8px hsl(38 92% 55% / 0.2);
-  
-  --sidebar-background: hsl(215 40% 10%);
-  --sidebar-foreground: hsl(40 20% 95%);
-  --sidebar-primary: hsl(38 92% 55%);
-  --sidebar-primary-foreground: hsl(215 65% 15%);
-  --sidebar-accent: hsl(215 30% 18%);
-  --sidebar-accent-foreground: hsl(40 20% 95%);
-  --sidebar-border: hsl(215 30% 20%);
-  --sidebar-ring: hsl(38 92% 55%);
+  --sidebar-ring: hsl(215 56% 40%);
 }
 
 @theme {
@@ -158,7 +123,13 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* Church-specific colors */
+  /* ── Brand palette (hex → Tailwind utilities with opacity support) ── */
+  --color-brand-navy: #1a365d;
+  --color-brand-gold: #d4a843;
+  --color-brand-cream: #f5f0e8;
+  --color-brand-gold-hover: #c49a3a;
+
+  /* Legacy church-specific aliases (kept for compatibility) */
   --color-church-gold: var(--church-gold);
   --color-church-gold-light: var(--church-gold-light);
   --color-church-navy: var(--church-navy);
@@ -176,6 +147,7 @@
   /* Typography */
   --font-display: 'Playfair Display', Georgia, serif;
   --font-body: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-handwritten: 'Caveat', cursive;
 }
 
 @keyframes accordion-down {

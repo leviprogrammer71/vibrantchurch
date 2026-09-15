@@ -7,7 +7,6 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useAuth } from '@/hooks/useAuth';
-import { supabase } from '@/integrations/supabase/client';
 
 export default function StaffLogin() {
   const navigate = useNavigate();
@@ -18,12 +17,8 @@ export default function StaffLogin() {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    if (!loading && adminStatusReady && user) {
-      if (isAdmin) {
-        navigate('/admin');
-      } else {
-        navigate('/');
-      }
+    if (!loading && adminStatusReady && user && isAdmin) {
+      navigate('/admin');
     }
   }, [user, isAdmin, loading, adminStatusReady, navigate]);
 
@@ -32,37 +27,25 @@ export default function StaffLogin() {
     setError('');
     setSubmitting(true);
 
-    const trimmedUsername = username.trim().toLowerCase();
+    const trimmed = username.trim();
 
-    if (!trimmedUsername || trimmedUsername.length > 50) {
-      setError('Invalid username or password.');
+    if (!trimmed) {
+      setError('Please enter your username.');
       setSubmitting(false);
       return;
     }
-
-    if (password.length < 6) {
-      setError('Invalid username or password.');
+    if (!password) {
+      setError('Please enter your password.');
       setSubmitting(false);
       return;
     }
 
     try {
-      // Lookup staff email via secure edge function (prevents email exposure in client code)
-      const { data: lookupData, error: lookupError } = await supabase.functions.invoke('staff-auth-lookup', {
-        body: { username: trimmedUsername },
-      });
-
-      if (lookupError || !lookupData?.valid || !lookupData?.email) {
-        setError('Invalid username or password.');
-        setSubmitting(false);
-        return;
-      }
-
-      const { error } = await signIn(lookupData.email, password);
-      if (error) {
+      const { error: signInError } = await signIn(trimmed, password);
+      if (signInError) {
         setError('Invalid username or password.');
       }
-    } catch (err) {
+    } catch {
       setError('An unexpected error occurred. Please try again.');
     } finally {
       setSubmitting(false);
@@ -73,18 +56,6 @@ export default function StaffLogin() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-muted">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-      </div>
-    );
-  }
-
-  // Show checking state while admin status is being verified
-  if (user && !adminStatusReady) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-muted">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Checking access...</p>
-        </div>
       </div>
     );
   }

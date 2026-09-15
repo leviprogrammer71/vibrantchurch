@@ -99,19 +99,62 @@ export function GivePageEditor({ initialData, onSave, isSaving }: GivePageEditor
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate hosted button ID
     if (!formData.hostedButtonId.trim()) {
-      toast({ 
-        title: 'Validation Error', 
+      toast({
+        title: 'Validation Error',
         description: 'PayPal Hosted Button ID is required.',
-        variant: 'destructive' 
+        variant: 'destructive'
       });
       return;
     }
-    
+
     try {
-      await onSave(formData);
+      // Transform flat structure to nested structure expected by Give.tsx
+      const nestedData = {
+        hero: {
+          title: formData.heroTitle,
+          description: formData.heroDescription,
+        },
+        givingOptions: [
+          { title: formData.giveNowButtonText, description: 'Give a one-time gift' },
+          { title: formData.recurringButtonText, description: 'Set up automatic monthly giving' },
+          { title: formData.specialGiftButtonText, description: 'Make a special gift' },
+        ],
+        secureGiving: {
+          headline: 'Secure Online Giving',
+          description: 'Give securely through our trusted PayPal integration.',
+          instructions: 'Select your giving option below to get started.',
+          giveNowButtonText: formData.giveNowButtonText,
+          securityNote: 'Your donation is secure and encrypted.',
+          recurringButtonText: formData.recurringButtonText,
+          specialGiftButtonText: formData.specialGiftButtonText,
+        },
+        otherWaysToGive: {
+          headline: formData.otherWaysHeadline,
+          inPerson: formData.inPersonText,
+          byMail: formData.byMailText,
+          textToGive: formData.textToGiveText,
+        },
+        giftImpact: {
+          headline: formData.impactHeadline,
+          description: formData.impactDescription,
+          areas: formData.impactAreas,
+          thankYouMessage: formData.thankYouMessage,
+        },
+        faq: {
+          headline: formData.faqHeadline,
+          questions: formData.faqItems,
+        },
+        scripture: {
+          verse: formData.scriptureVerse,
+          reference: formData.scriptureReference,
+        },
+        hostedButtonId: formData.hostedButtonId,
+        showQrCode: formData.showQrCode,
+      };
+      await onSave(nestedData as any);
       toast({ title: 'Give page saved!', description: 'Your changes are now live.' });
     } catch { toast({ title: 'Error saving', variant: 'destructive' }); }
   };

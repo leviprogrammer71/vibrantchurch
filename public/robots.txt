@@ -1,3 +1,16 @@
+# Vibrant Church — vibranttchurch.org
+# Allow all crawlers full access
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /staff
+Disallow: /auth
+
+# Sitemap
+Sitemap: https://vibranttchurch.org/sitemap.xml
+
+# Crawl-delay (be kind to server)
 User-agent: Googlebot
 Allow: /
 
@@ -10,5 +23,8 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
+User-agent: LinkedInBot
 Allow: /
+
+# Host
+Host: https://vibranttchurch.org

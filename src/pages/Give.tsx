@@ -1,329 +1,264 @@
 import { motion } from 'framer-motion';
-import { Heart, CreditCard, Calendar, Gift, Shield, HelpCircle, Download } from 'lucide-react';
+// No Lucide imports — using custom watercolor icons
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { usePageContent } from '@/hooks/usePageContent';
-import { PayPalHostedButton } from '@/components/giving/PayPalHostedButton';
+import { SEO } from '@/components/SEO';
+import { churchInfo, givePage } from '@/data/church';
 
-// Default content from siteContent.ts
-import { givePageContent as defaultGiveContent, churchInfo as defaultChurchInfo } from '@/data/siteContent';
-
-const givingIcons = [CreditCard, Calendar, Gift];
-
-// PayPal giving link for QR code
-const PAYPAL_GIVING_URL = 'https://www.paypal.com/donate/?hosted_button_id=4GTZXSK6DTAGC';
-
-// Mailing address for donations
-const MAILING_ADDRESS = {
-  line1: 'P.O. Box 649',
-  line2: 'Terre Hill, PA 17581',
+// =====================================================
+// Static assets
+// =====================================================
+const images = {
+  heroBg: '/images/elements/bg5.png',
+  thankYouBg: '/images/elements/12.png',
+  worship: '/images/photos/worship.jpg',
+  service: '/images/photos/service.jpg',
+  hangout: '/images/photos/hangout.jpg',
 };
 
-interface GivePageContent {
-  hero: { title: string; description: string };
-  givingOptions: Array<{ title: string; description: string }>;
-  secureGiving: { headline: string; description: string; instructions: string; giveNowButtonText: string; securityNote: string; recurringButtonText: string; specialGiftButtonText: string };
-  otherWaysToGive: { headline: string; inPerson: string; byMail: string; textToGive: string };
-  giftImpact: { headline: string; description: string; areas: Array<{ title: string; description: string }>; thankYouMessage: string };
-  faq: { headline: string; questions: Array<{ question: string; answer: string }> };
-  scripture: { verse: string; reference: string };
-  // Admin-controlled fields
-  hostedButtonId?: string;
-  showQrCode?: boolean;
-}
+const bgElements = {
+  leaves: '/images/elements/bg10.png',
+  goldFrame: '/images/elements/bg12.png',
+  lushBotanicals: '/images/elements/bg14.png',
+  dramaticClouds: '/images/elements/bg33.png',
+};
 
-interface ChurchInfoContent {
-  fullAddress: string;
-}
+const GIVING_URL = churchInfo?.links?.giving ?? 'https://vibrant-church-506100.churchcenter.com/giving';
 
-// GivingQRCode component
+const fadeUp = {
+  initial: { opacity: 0, y: 30 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.7, ease: 'easeOut' as const },
+};
 
-// QR Code Component with Download
-function GivingQRCode() {
-  const handleDownload = () => {
-    const link = document.createElement('a');
-    link.href = '/images/giving-qr-code.jpeg';
-    link.download = 'vibrant-church-giving-qr.jpeg';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+// =====================================================
+// Data
+// =====================================================
+const whyGiveCards = [
+  {
+    iconSrc: '/images/elements/icons/heart.png',
+    title: 'Fund the Mission',
+    description: 'Your gifts power community outreach, kids ministry, and youth programs that change lives.',
+    photo: images.service,
+  },
+  {
+    iconSrc: '/images/elements/icons/people-circle.png',
+    title: 'Build Community',
+    description: 'Generosity keeps worship gatherings, small groups, and church events thriving for everyone.',
+    photo: images.worship,
+  },
+  {
+    iconSrc: '/images/elements/icons/cross.png',
+    title: 'Make an Impact',
+    description: 'Every gift helps us serve Terre Hill and reach beyond our community with the love of Jesus.',
+    photo: images.hangout,
+  },
+];
 
-  return (
-    <Card className="bg-card border-2 border-secondary/30">
-      <CardContent className="p-8 text-center">
-        <h3 className="text-xl font-semibold text-foreground mb-4">Give by QR Code</h3>
-        <p className="text-muted-foreground mb-6">
-          Scan to give with your phone.
-        </p>
-        <a 
-          href={PAYPAL_GIVING_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block mb-6 hover:opacity-90 transition-opacity"
-        >
-          <img 
-            src="/images/giving-qr-code.jpeg"
-            alt="Scan to give to Vibrant Church"
-            className="w-48 h-48 mx-auto rounded-lg shadow-md bg-white p-2"
-          />
-        </a>
-        <div>
-          <Button 
-            variant="outline" 
-            onClick={handleDownload}
-            className="gap-2"
-          >
-            <Download className="w-4 h-4" />
-            Download QR Code
-          </Button>
-          <p className="text-xs text-muted-foreground mt-2">
-            Print and share at events or in bulletins
-          </p>
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
+const waysToGive = [
+  {
+    iconSrc: '/images/elements/icons/calendar.png',
+    title: 'Give Online',
+    description: 'Give quickly and securely anytime through our Church Center giving portal.',
+    action: { label: 'Give Online', href: GIVING_URL, external: true },
+  },
+  {
+    iconSrc: '/images/elements/icons/location.png',
+    title: 'Give In Person',
+    description: 'Join us Sunday mornings and give during the offering as part of our worship gathering.',
+    action: null,
+  },
+  {
+    iconSrc: '/images/elements/icons/speech-bubble.png',
+    title: 'Mail a Check',
+    description: `Make checks payable to Vibrant Church and mail to ${churchInfo?.fullAddress ?? '113 Conestoga Street, Terre Hill, PA 17581'}.`,
+    action: null,
+  },
+];
 
 export default function Give() {
-  const { content } = usePageContent<GivePageContent>('give', defaultGiveContent as GivePageContent);
-  const { content: churchInfo } = usePageContent<ChurchInfoContent>('churchInfo', { fullAddress: defaultChurchInfo.fullAddress });
-  
-  const { hero, givingOptions, secureGiving, otherWaysToGive, giftImpact, faq, scripture, hostedButtonId, showQrCode = true } = content;
-
   return (
-    <div className="min-h-screen pt-20">
-      {/* Hero Section */}
-      <section className="relative py-20 lg:py-32 bg-gradient-to-br from-primary to-primary/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-brand-cream">
+      <SEO
+        title="Give — Support the Mission of Vibrant Church"
+        description="Give online to Vibrant Church in Terre Hill, PA. Your generosity supports community outreach, kids and youth ministry, worship, and missions in Lancaster County. Give securely through Church Center, in person, or by mail."
+        path="/give"
+      />
+      {/* ============================================================
+          HERO
+      ============================================================ */}
+      <section className="relative pt-32 pb-24 lg:pt-40 lg:pb-32 overflow-hidden bg-brand-navy">
+        <div className="absolute inset-0">
+          <img src={images.heroBg} alt="" className="w-full h-full object-cover opacity-50" />
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-navy/80 via-brand-navy/50 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/70 via-transparent to-brand-navy/20" />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="max-w-3xl"
+            className="max-w-2xl"
           >
-            <Heart className="w-12 h-12 text-secondary mb-6" />
-            <h1 className="font-[Playfair_Display] text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
-              {hero.title}
+            <span className="block text-sm font-semibold uppercase tracking-widest text-brand-gold mb-4">
+              Give
+            </span>
+            <h1 className="font-[Playfair_Display] text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+              The gift of <em className="italic text-brand-gold font-normal">generosity.</em>
             </h1>
-            <p className="text-xl text-white/90 leading-relaxed">
-              {hero.description}
+            <p className="text-lg text-white/80 leading-relaxed mb-10 max-w-xl">
+              Your generosity fuels the mission of Vibrant Church — reaching people, growing disciples, and
+              serving our community.
             </p>
+            <a href={GIVING_URL} target="_blank" rel="noopener noreferrer">
+              <Button size="lg" className="bg-brand-gold text-brand-navy hover:bg-brand-gold/90 font-semibold">
+                Give Now
+              </Button>
+            </a>
           </motion.div>
         </div>
       </section>
 
-      {/* Giving Options Cards */}
-      <section className="py-16 bg-card">
+      {/* ============================================================
+          WHY GIVE
+      ============================================================ */}
+      <section className="relative py-20 lg:py-28 overflow-hidden">
+        {/* Lush botanicals — bottom-right accent */}
+        <div
+          className="absolute bottom-0 right-0 w-[400px] h-[300px] bg-cover bg-right-bottom opacity-[0.05] pointer-events-none"
+          style={{ backgroundImage: `url('${bgElements.lushBotanicals}')` }}
+        />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 -mt-20 relative z-20">
-            {givingOptions.map((option, index) => {
-              const Icon = givingIcons[index];
-              return (
+          <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-16">
+            <span className="block text-sm font-semibold uppercase tracking-widest text-brand-gold mb-4">
+              Why Give
+            </span>
+            <h2 className="font-[Playfair_Display] text-3xl sm:text-4xl font-bold text-brand-navy leading-tight">
+              Generosity changes everything.
+            </h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {whyGiveCards.map((card, index) => (
                 <motion.div
-                  key={option.title}
+                  key={card.title}
                   initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.12 }}
+                  className="rounded-2xl overflow-hidden shadow-xl bg-white"
                 >
-                  <Card className="h-full bg-card border-none shadow-xl text-center hover:shadow-2xl transition-shadow">
-                    <CardContent className="p-8">
-                      <div className="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-4">
-                        <Icon className="w-8 h-8 text-secondary" />
-                      </div>
-                      <h3 className="text-xl font-semibold text-foreground mb-2">{option.title}</h3>
-                      <p className="text-muted-foreground">{option.description}</p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Give Online Section with PayPal */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-card">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <Card className="overflow-hidden border-2 border-secondary/30 shadow-2xl">
-              <div className="bg-primary text-primary-foreground px-4 py-6 sm:p-8 text-center">
-                <Heart className="w-8 h-8 sm:w-10 sm:h-10 text-secondary mx-auto mb-3 sm:mb-4" />
-                <h2 className="font-[Playfair_Display] text-xl sm:text-2xl md:text-3xl font-bold mb-2 whitespace-nowrap">
-                  Give Online
-                </h2>
-                <p className="text-sm sm:text-base text-primary-foreground/80 max-w-md mx-auto">
-                  {secureGiving.description}
-                </p>
-              </div>
-              <CardContent className="p-4 sm:p-6 lg:p-8 space-y-6 sm:space-y-8">
-                <div className="text-center">
-                  <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2">
-                    Support Our Ministry
-                  </h3>
-                  <p className="text-sm sm:text-base text-muted-foreground mb-6">
-                    Your generous giving helps us spread the Gospel and serve our community
-                  </p>
-                  
-                  {/* PayPal Hosted Button */}
-                  <PayPalHostedButton className="max-w-sm mx-auto" />
-                </div>
-
-                <div className="border-t border-border pt-6 sm:pt-8">
-                  <div className="flex flex-wrap items-center justify-center gap-2 text-xs sm:text-sm text-muted-foreground mb-4">
-                    <Shield className="w-4 h-4 text-secondary flex-shrink-0" />
-                    <span className="text-center">{secureGiving.securityNote}</span>
-                  </div>
-                </div>
-
-                <div className="bg-muted rounded-lg p-4 sm:p-6">
-                  <h4 className="font-semibold text-foreground mb-3 text-sm sm:text-base">{otherWaysToGive.headline}</h4>
-                  <ul className="space-y-3 text-xs sm:text-sm text-muted-foreground">
-                    <li className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-0">
-                      <span className="font-semibold text-foreground">In Person:</span>
-                      <span className="sm:ml-1">{otherWaysToGive.inPerson}</span>
-                    </li>
-                    <li className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-0">
-                      <span className="font-semibold text-foreground">By Mail:</span>
-                      <span className="sm:ml-1">{otherWaysToGive.byMail} {MAILING_ADDRESS.line1}, {MAILING_ADDRESS.line2}</span>
-                    </li>
-                    <li className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-0">
-                      <span className="font-semibold text-foreground">Text to Give:</span>
-                      <span className="sm:ml-1">{otherWaysToGive.textToGive}</span>
-                    </li>
-                  </ul>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* QR Code Section - conditionally rendered */}
-      {showQrCode && (
-        <section className="py-16 bg-muted">
-          <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <GivingQRCode />
-            </motion.div>
-          </div>
-        </section>
-      )}
-
-      {/* Where Your Gift Goes Section */}
-      <section className="py-20 lg:py-28 bg-card">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="font-[Playfair_Display] text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              {giftImpact.headline}
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-4">
-              {giftImpact.description}
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {giftImpact.areas.map((area, index) => (
-              <motion.div
-                key={area.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <Card className="h-full bg-muted border-none shadow-lg text-center">
-                  <CardContent className="p-6">
-                    <div className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-4">
-                      <Heart className="w-6 h-6 text-secondary" />
+                  <div className="relative h-44">
+                    <img src={card.photo} alt={card.title} className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/60 via-transparent to-transparent" />
+                    <div className="absolute -bottom-6 left-6 w-14 h-14 rounded-full bg-brand-gold flex items-center justify-center shadow-lg">
+                      <img src={card.iconSrc} alt="" className="w-9 h-9 object-contain" />
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">{area.title}</h3>
-                    <p className="text-sm text-muted-foreground">{area.description}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+                  </div>
+                  <div className="p-6 pt-10">
+                    <h3 className="font-[Playfair_Display] text-xl font-semibold text-brand-navy mb-2">
+                      {card.title}
+                    </h3>
+                    <p className="text-brand-navy/70 leading-relaxed">{card.description}</p>
+                  </div>
+                </motion.div>
+              ))}
           </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mt-12"
-          >
-            <p className="text-lg text-muted-foreground font-medium">
-              {giftImpact.thankYouMessage}
-            </p>
-          </motion.div>
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <section className="py-20 lg:py-28 bg-muted">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <HelpCircle className="w-10 h-10 text-secondary mx-auto mb-4" />
-            <h2 className="font-[Playfair_Display] text-3xl font-bold text-foreground mb-4">
-              {faq.headline}
+      {/* ============================================================
+          WAYS TO GIVE
+      ============================================================ */}
+      <section className="relative py-20 lg:py-28 bg-brand-navy overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-10 pointer-events-none"
+          style={{ backgroundImage: `url('${bgElements.leaves}')` }}
+        />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div {...fadeUp} className="text-center max-w-2xl mx-auto mb-16">
+            <span className="block text-sm font-semibold uppercase tracking-widest text-brand-gold mb-4">
+              Ways to Give
+            </span>
+            <h2 className="font-[Playfair_Display] text-3xl sm:text-4xl font-bold text-white leading-tight">
+              Give in the way that works for you.
             </h2>
           </motion.div>
 
-          <div className="space-y-6">
-            {faq.questions.map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-              >
-                <Card className="bg-card border-none">
-                  <CardContent className="p-6">
-                    <h3 className="font-semibold text-foreground mb-2">{item.question}</h3>
-                    <p className="text-muted-foreground">{item.answer}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            {waysToGive.map((way, index) => (
+                <motion.div
+                  key={way.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.12 }}
+                  className="rounded-2xl bg-white/5 border border-brand-gold/30 p-8 text-center flex flex-col items-center"
+                >
+                  <div className="w-16 h-16 rounded-full bg-white/10 border border-brand-gold/40 flex items-center justify-center mb-5">
+                    <img src={way.iconSrc} alt="" className="w-8 h-8 object-contain brightness-200" />
+                  </div>
+                  <h3 className="font-[Playfair_Display] text-xl font-semibold text-white mb-3">{way.title}</h3>
+                  <p className="text-white/70 leading-relaxed mb-6">{way.description}</p>
+                  {way.action && (
+                    <a
+                      href={way.action.href}
+                      target={way.action.external ? '_blank' : undefined}
+                      rel={way.action.external ? 'noopener noreferrer' : undefined}
+                      className="mt-auto"
+                    >
+                      <Button className="bg-brand-gold text-brand-navy hover:bg-brand-gold/90 font-semibold">
+                        {way.action.label}
+                      </Button>
+                    </a>
+                  )}
+                </motion.div>
+              ))}
           </div>
+
+          <motion.div {...fadeUp} className="max-w-3xl mx-auto text-center">
+            <img src="/images/elements/icons/quote-open.png" alt="" className="w-10 h-10 mx-auto mb-3 opacity-40 brightness-200" />
+            <p className="font-[Caveat] text-3xl sm:text-4xl text-brand-gold leading-snug">
+              &ldquo;Each of you should give what you have decided in your heart to give, not reluctantly or
+              under compulsion, for God loves a cheerful giver.&rdquo;
+            </p>
+            <p className="font-[Caveat] text-2xl text-white/70 mt-3">— 2 Corinthians 9:7</p>
+            <img src="/images/elements/icons/divider-leafy.png" alt="" className="w-32 mx-auto mt-6 opacity-30 brightness-200" />
+          </motion.div>
         </div>
       </section>
 
-      {/* Scripture Section */}
-      <section className="py-20 bg-primary text-primary-foreground">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <p className="text-xl sm:text-2xl text-primary-foreground/90 italic mb-6">
-              "{scripture.verse}"
+      {/* ============================================================
+          THANK YOU
+      ============================================================ */}
+      <section className="relative py-24 lg:py-32 overflow-hidden">
+        <div className="absolute inset-0">
+          <img src={images.thankYouBg} alt="" className="w-full h-full object-cover opacity-20" />
+          <div className="absolute inset-0 bg-brand-cream/80" />
+        </div>
+        {/* Gold frame accent — top-left corner */}
+        <div
+          className="absolute top-0 left-0 w-[350px] h-[250px] bg-cover bg-left-top opacity-[0.06] pointer-events-none"
+          style={{ backgroundImage: `url('${bgElements.goldFrame}')` }}
+        />
+
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div {...fadeUp}>
+            <img src="/images/elements/icons/cross.png" alt="" className="w-10 h-10 mx-auto mb-4 opacity-60" />
+            <span className="block text-sm font-semibold uppercase tracking-widest text-brand-gold mb-4">
+              Thank You
+            </span>
+            <p className="font-[Caveat] text-4xl sm:text-5xl text-brand-navy leading-snug mb-8">
+              Thank you for being part of our church family.
             </p>
-            <p className="text-secondary font-semibold">— {scripture.reference}</p>
+            <p className="text-lg text-brand-navy/70 leading-relaxed max-w-2xl mx-auto">
+              &ldquo;The Lord bless you and keep you; the Lord make his face shine on you and be gracious to
+              you; the Lord turn his face toward you and give you peace.&rdquo;
+            </p>
+            <p className="text-brand-navy/50 mt-3">Numbers 6:24-26</p>
+            <p className="text-brand-navy/60 mt-8 max-w-xl mx-auto">{givePage?.thanks}</p>
           </motion.div>
         </div>
       </section>

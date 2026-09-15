@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Mail, Clock, User, MessageSquare, Phone, RefreshCw, Loader2, Inbox, Eye } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
+import { supabase, hasSupabase } from '@/integrations/supabase/client';
 import { format, parseISO } from 'date-fns';
 import {
   Dialog,
@@ -26,24 +26,52 @@ interface ContactSubmission {
   read_at: string | null;
 }
 
+// ─── localStorage fallback for messages ──────────────────────
+const LS_MESSAGES_KEY = 'vc_contact_messages';
+
+function getLocalMessages(): ContactSubmission[] {
+  try {
+    const raw = localStorage.getItem(LS_MESSAGES_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch { return []; }
+}
+
+function markLocalMessageRead(id: string) {
+  const msgs = getLocalMessages();
+  const idx = msgs.findIndex(m => m.id === id);
+  if (idx >= 0) {
+    msgs[idx].read_at = new Date().toISOString();
+    msgs[idx].status = 'read';
+    localStorage.setItem(LS_MESSAGES_KEY, JSON.stringify(msgs));
+  }
+}
+
 export function ContactSubmissionsViewer() {
   const [selectedMessage, setSelectedMessage] = useState<ContactSubmission | null>(null);
 
   const { data: submissions, isLoading, error, refetch, isFetching } = useQuery({
     queryKey: ['contact-submissions'],
     queryFn: async () => {
+      if (!hasSupabase) return getLocalMessages();
+
       const { data, error } = await supabase
         .from('contact_submissions')
         .select('*')
         .order('created_at', { ascending: false })
         .limit(50);
-      
+
       if (error) throw error;
       return data as ContactSubmission[];
     },
+    retry: hasSupabase ? 3 : false,
   });
 
   const markAsRead = async (id: string) => {
+    if (!hasSupabase) {
+      markLocalMessageRead(id);
+      refetch();
+      return;
+    }
     await supabase
       .from('contact_submissions')
       .update({ read_at: new Date().toISOString(), status: 'read' })
@@ -94,9 +122,9 @@ export function ContactSubmissionsViewer() {
                 View messages received through the contact form
               </CardDescription>
             </div>
-            <Button 
-              onClick={() => refetch()} 
-              variant="outline" 
+            <Button
+              onClick={() => refetch()}
+              variant="outline"
               size="sm"
               disabled={isFetching}
             >
@@ -166,7 +194,7 @@ export function ContactSubmissionsViewer() {
               Received {selectedMessage && format(parseISO(selectedMessage.created_at), 'MMMM d, yyyy \'at\' h:mm a')}
             </DialogDescription>
           </DialogHeader>
-          
+
           {selectedMessage && (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4 text-sm">
@@ -180,7 +208,7 @@ export function ContactSubmissionsViewer() {
                   <p className="text-muted-foreground flex items-center gap-1">
                     <Mail className="w-4 h-4" /> Email
                   </p>
-                  <a 
+                  <a
                     href={`mailto:${selectedMessage.email}`}
                     className="font-medium text-primary hover:underline"
                   >
@@ -192,7 +220,7 @@ export function ContactSubmissionsViewer() {
                     <p className="text-muted-foreground flex items-center gap-1">
                       <Phone className="w-4 h-4" /> Phone
                     </p>
-                    <a 
+                    <a
                       href={`tel:${selectedMessage.phone}`}
                       className="font-medium text-primary hover:underline"
                     >
@@ -201,7 +229,7 @@ export function ContactSubmissionsViewer() {
                   </div>
                 )}
               </div>
-              
+
               <div>
                 <p className="text-muted-foreground flex items-center gap-1 mb-2">
                   <MessageSquare className="w-4 h-4" /> Message

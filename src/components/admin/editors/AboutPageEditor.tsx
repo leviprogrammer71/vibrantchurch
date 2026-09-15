@@ -219,7 +219,41 @@ export function AboutPageEditor({ initialData, onSave, isSaving }: AboutPageEdit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await onSave(formData);
+      // Transform flat structure to nested structure expected by About.tsx
+      const nestedData = {
+        hero: {
+          title: formData.heroTitle,
+          description: formData.heroDescription,
+        },
+        whoWeAre: {
+          eyebrowText: formData.whoWeAreEyebrow,
+          headline: formData.whoWeAreHeadline,
+          paragraphs: formData.whoWeAreParagraphs,
+        },
+        vision: {
+          headline: formData.visionHeadline,
+          statement: formData.visionStatement,
+        },
+        values: {
+          eyebrowText: formData.valuesEyebrow,
+          headline: formData.valuesHeadline,
+          items: formData.values,
+        },
+        beliefs: {
+          headline: formData.beliefsHeadline,
+          intro: formData.beliefsIntro,
+          items: formData.beliefs,
+        },
+        leadership: {
+          eyebrowText: formData.leadershipEyebrow,
+          headline: formData.leadershipHeadline,
+          description: formData.leadershipDescription,
+          seniorPastor: formData.seniorPastor,
+          overseer: formData.overseer,
+          team: formData.leaders,
+        },
+      };
+      await onSave(nestedData as any);
       toast({
         title: 'About page saved!',
         description: 'Your changes are now live.',

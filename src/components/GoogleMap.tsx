@@ -6,7 +6,7 @@ interface GoogleMapProps {
 }
 
 // Google Maps API key from environment variable (publishable browser key with domain restrictions)
-const GOOGLE_MAPS_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '';
+const GOOGLE_MAPS_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || 'AIzaSyDSFKlhsyA_h1emaaxDUXjE5Vio2y27q4U';
 
 /**
  * Google Maps embed component for church location

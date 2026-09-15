@@ -74,7 +74,43 @@ export function ContactPageEditor({ initialData, onSave, isSaving }: ContactPage
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await onSave(formData);
+      // Transform flat structure to nested structure expected by Contact.tsx
+      const nestedData = {
+        hero: {
+          title: formData.heroTitle,
+          description: formData.heroDescription,
+          subtext: formData.heroSubtext,
+        },
+        contactInfo: {
+          addressTitle: 'Address',
+          phoneTitle: 'Phone',
+          emailTitle: 'Email',
+          serviceTimesTitle: 'Service Times',
+        },
+        contactForm: {
+          headline: formData.formHeadline,
+          description: formData.formDescription,
+          namePlaceholder: 'Your Name',
+          emailPlaceholder: 'Your Email',
+          phonePlaceholder: 'Your Phone (optional)',
+          subjectPlaceholder: 'Subject',
+          messagePlaceholder: 'Your Message',
+          submitButtonText: formData.submitButtonText,
+          submittingText: 'Sending...',
+          successTitle: formData.successTitle,
+          successDescription: formData.successDescription,
+        },
+        officeHours: {
+          headline: formData.officeHoursHeadline,
+          hours: formData.officeHours,
+        },
+        prayerRequest: {
+          headline: formData.prayerHeadline,
+          description: formData.prayerDescription,
+          footnote: 'Contact us to request prayer.',
+        },
+      };
+      await onSave(nestedData as any);
       toast({ title: 'Contact page saved!', description: 'Your changes are now live.' });
     } catch { toast({ title: 'Error saving', variant: 'destructive' }); }
   };
